@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soleij — Campaign Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208; --ink-light: #3d2f1a; --parchment: #f5ecd7; --parchment-dark: #e8d9b8;
+    --parchment-mid: #ede0c4; --rust: #8b3a1a; --rust-light: #c4541f; --gold: #8b6914;
+    --gold-light: #c49a28; --stone: #5a5248; --stone-light: #7a6e62; --blood: #6b1515;
+    --gm-bg: #1a0d0d; --gm-border: #6b1515; --gm-text: #f0d4a8; --gm-accent: #c44a1a;
+    --shadow: rgba(10,6,2,0.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1c1510; background-image: radial-gradient(ellipse at 20% 20%, rgba(90,60,20,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(60,20,10,0.2) 0%, transparent 60%); font-family: 'Crimson Pro', Georgia, serif; color: var(--ink); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .page-wrap { max-width: 900px; margin: 0 auto; }
+
+  .site-header { text-align: center; padding: 2.5rem 2rem 2rem; margin-bottom: 2rem; background: var(--parchment); border: 2px solid var(--gold); border-radius: 2px; box-shadow: 0 4px 24px var(--shadow), inset 0 0 60px rgba(180,130,40,0.08); position: relative; }
+  .site-header::before, .site-header::after { content: '✦'; font-size: 1rem; color: var(--gold); position: absolute; top: 0.5rem; }
+  .site-header::before { left: 0.75rem; } .site-header::after { right: 0.75rem; }
+  .site-header .subtitle { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--stone); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .site-header h1 { font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 600; color: var(--rust); line-height: 1.1; margin-bottom: 0.3rem; }
+  .site-header .header-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.05rem; color: var(--stone); margin-bottom: 1rem; }
+  .divider { display: flex; align-items: center; gap: 0.75rem; justify-content: center; color: var(--gold); font-size: 0.8rem; letter-spacing: 0.15em; margin: 0.5rem 0; }
+  .divider::before, .divider::after { content: ''; flex: 1; max-width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  .gm-unlock-panel { background: var(--gm-bg); border: 1px solid var(--gm-border); border-radius: 2px; padding: 1rem 1.25rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .gm-lock-icon { font-size: 1.2rem; color: var(--gm-accent); flex-shrink: 0; }
+  .gm-unlock-panel label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gm-text); flex-shrink: 0; }
+  .gm-unlock-panel input[type="password"] { background: rgba(255,255,255,0.05); border: 1px solid var(--gm-border); border-radius: 2px; padding: 0.35rem 0.7rem; color: var(--gm-text); font-family: 'Crimson Pro', serif; font-size: 0.95rem; flex: 1; min-width: 140px; outline: none; }
+  .gm-unlock-panel input[type="password"]::placeholder { color: rgba(240,212,168,0.3); }
+  .gm-unlock-panel input[type="password"]:focus { border-color: var(--gm-accent); }
+  .gm-btn { background: transparent; border: 1px solid var(--gm-accent); color: var(--gm-accent); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.12em; padding: 0.4rem 1rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; text-transform: uppercase; }
+  .gm-btn:hover { background: var(--gm-accent); color: var(--gm-bg); }
+  .gm-status { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: #4a8a4a; display: none; }
+  .gm-error { font-size: 0.75rem; color: #a04040; display: none; }
+  .gm-relock { border-color: #555; color: #888; }
+
+  .card { background: var(--parchment); border: 1px solid var(--gold); border-radius: 2px; margin-bottom: 1.25rem; box-shadow: 0 2px 12px var(--shadow); overflow: hidden; }
+  .card-header { background: var(--parchment-mid); border-bottom: 1px solid var(--gold); padding: 0.75rem 1.25rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; gap: 0.75rem; }
+  .card-header:hover { background: var(--parchment-dark); }
+  .card-header-left { display: flex; align-items: center; gap: 0.75rem; }
+  .card-tag { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 1px; border: 1px solid; flex-shrink: 0; }
+  .tag-player { color: var(--stone); border-color: var(--stone-light); background: rgba(90,82,72,0.08); }
+  .tag-gm { color: var(--blood); border-color: var(--blood); background: rgba(107,21,21,0.08); }
+  .card-title { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 600; color: var(--rust); letter-spacing: 0.05em; }
+  .card-subtitle { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: var(--stone); }
+  .accordion-arrow { color: var(--gold); font-size: 0.8rem; transition: transform 0.25s; flex-shrink: 0; }
+  .card.open .accordion-arrow { transform: rotate(180deg); }
+  .card-body { padding: 1.25rem 1.5rem; display: none; border-top: 1px solid rgba(139,105,20,0.2); }
+  .card.open .card-body { display: block; }
+
+  .gm-spoiler { background: rgba(26,13,13,0.04); border-left: 3px solid var(--blood); border-radius: 0 2px 2px 0; padding: 0.85rem 1rem; margin-top: 1rem; }
+  .gm-spoiler-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blood); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+
+  .status-banner { background: var(--parchment-mid); border: 1px solid var(--gold); border-left: 4px solid var(--rust); padding: 0.9rem 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 2px 8px var(--shadow); }
+  .status-banner h2 { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rust); margin-bottom: 0.5rem; }
+
+  h3 { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 600; color: var(--rust); letter-spacing: 0.08em; margin: 1rem 0 0.4rem; padding-bottom: 0.25rem; border-bottom: 1px solid rgba(139,105,20,0.3); }
+  h3:first-child { margin-top: 0; }
+  p { font-size: 1rem; line-height: 1.65; color: var(--ink-light); margin-bottom: 0.6rem; }
+  p:last-child { margin-bottom: 0; }
+  em { font-style: italic; color: var(--stone); }
+  .role-line { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: var(--stone); margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px dashed rgba(139,105,20,0.3); }
+
+  .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 0.75rem 0; }
+  .detail-item { background: rgba(139,105,20,0.07); border: 1px solid rgba(139,105,20,0.2); padding: 0.6rem 0.85rem; border-radius: 1px; }
+  .detail-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone); margin-bottom: 0.2rem; }
+  .detail-value { font-size: 0.95rem; color: var(--ink); line-height: 1.3; }
+
+  .thread-list { list-style: none; margin: 0.5rem 0; }
+  .thread-list li { padding: 0.35rem 0 0.35rem 1.2rem; border-bottom: 1px dashed rgba(139,105,20,0.2); font-size: 0.95rem; color: var(--ink-light); position: relative; line-height: 1.4; }
+  .thread-list li::before { content: '◆'; font-size: 0.45rem; color: var(--gold); position: absolute; left: 0; top: 0.55rem; }
+  .thread-list li:last-child { border-bottom: none; }
+
+  .status-pill { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.15rem 0.55rem; border-radius: 1px; border: 1px solid; margin-left: 0.4rem; vertical-align: middle; }
+  .pill-active { color: #5a1a00; border-color: var(--rust-light); background: rgba(139,58,26,0.1); }
+  .pill-unknown { color: var(--stone); border-color: var(--stone-light); background: rgba(90,82,72,0.08); }
+  .pill-danger { color: var(--blood); border-color: var(--blood); background: rgba(107,21,21,0.1); }
+  .pill-done { color: #2a5a2a; border-color: #4a8a4a; background: rgba(42,90,42,0.08); }
+
+  .person-block { padding: 0.75rem 0; border-bottom: 1px dashed rgba(139,105,20,0.2); }
+  .person-block:last-child { border-bottom: none; }
+  .person-name { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 600; color: var(--rust); margin-bottom: 0.2rem; }
+  .person-role { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.82rem; color: var(--stone); margin-bottom: 0.35rem; }
+  .person-desc { font-size: 0.95rem; color: var(--ink-light); line-height: 1.55; }
+
+  .doc-block { background: rgba(139,105,20,0.06); border: 1px solid rgba(139,105,20,0.25); border-top: 3px solid var(--gold); padding: 0.85rem 1rem; margin: 0.75rem 0; border-radius: 1px; }
+  .doc-title { font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600; color: var(--rust); letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+
+  .ability-list { margin: 0.4rem 0; }
+  .ability-list li { font-size: 0.9rem; color: var(--ink-light); padding: 0.2rem 0 0.2rem 1rem; position: relative; }
+  .ability-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+
+  .risk-dots { display: flex; gap: 3px; }
+  .risk-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(139,105,20,0.2); border: 1px solid rgba(139,105,20,0.3); }
+  .risk-dot.filled { background: var(--rust); border-color: var(--rust); }
+  .risk-dot.high { background: var(--blood); border-color: var(--blood); }
+
+  .map-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.4rem; margin: 0.75rem 0; }
+  .map-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; color: var(--ink-light); }
+  .map-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stone-light); margin: 1.5rem 0 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(139,105,20,0.25); }
+
+  .alert-box { background: rgba(107,21,21,0.06); border: 1px solid rgba(107,21,21,0.3); border-left: 3px solid var(--blood); padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 2px 2px 0; }
+  .alert-box p { color: var(--blood); font-size: 0.9rem; }
+
+  footer { text-align: center; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,212,168,0.2); margin-top: 3rem; padding-top: 1rem; border-top: 1px solid rgba(240,212,168,0.1); }
+
+  @media (max-width: 600px) {
+    .site-header h1 { font-size: 1.7rem; }
+    .card-body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="site-header">
+    <div class="subtitle">Throne of Thorns Campaign · District of Yndarien, Ambria</div>
+    <h1>Soleij</h1>
+    <div class="header-desc">A compact stone town with long memory and longer secrets.</div>
+    <div class="divider">✦</div>
+    <p style="font-size:0.85rem; color:var(--stone); font-style:italic;">The Party · The City · Key Figures · Current Status</p>
+  </header>
+
+  <div class="gm-unlock-panel">
+    <span class="gm-lock-icon">⚿</span>
+    <label>GM Access</label>
+    <input type="password" id="gm-pass" placeholder="Enter GM passphrase…" />
+    <button class="gm-btn" onclick="tryUnlock()">Unlock</button>
+    <button class="gm-btn gm-relock" onclick="reLock()">Lock</button>
+    <span class="gm-status">✦ GM View Active — Spoilers Visible</span>
+    <span class="gm-error" id="gm-error">Incorrect passphrase.</span>
+  </div>
+
+  <!-- ═══ CURRENT STATUS ═══ -->
+  <div class="section-label">Current Status</div>
+
+  <div class="status-banner">
+    <h2>Where the mission stands</h2>
+    <div class="detail-grid">
+      <div class="detail-item"><div class="detail-label">Location</div><div class="detail-value">Tavern on the Hill, Soleij</div></div>
+      <div class="detail-item"><div class="detail-label">Primary Objective</div><div class="detail-value">Find Tu'buks <span class="status-pill pill-active">In Progress</span></div></div>
+      <div class="detail-item"><div class="detail-label">Documents</div><div class="detail-value">Lost — taken at watch station <span class="status-pill pill-danger">Compromised</span></div></div>
+      <div class="detail-item"><div class="detail-label">Party Status</div><div class="detail-value">Known to city watch <span class="status-pill pill-unknown">Monitored</span></div></div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Open Threads</div><div class="card-subtitle">What remains unresolved</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <ul class="thread-list">
+        <li>Tu'buks disappeared from Soleij. Someone took him. The archive held clues — those documents are now gone.</li>
+        <li>The passage behind the west wall of the restricted section — the trigger was not found. The stench of decay was unmistakeable.</li>
+        <li>The Tavern on the Hill — Tu'buks stayed here. His room may hold something.</li>
+        <li>The Baron's invitation — Jesavar Soleij sent word. Has not been acted upon.</li>
+        <li>The invisible operative — Diego knows what he saw. The others know only that the papers are gone.</li>
+        <li>Five people connected to the night Tu'buks disappeared are dead or missing — two watchmen, two archivists, and the senior archivist Wendric Solau, who has not been found.</li>
+      </ul>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Hidden threads</div>
+        <ul class="thread-list">
+          <li>Queen's Intelligence detained Tu'buks and extracted him through the secret passage — exiting through Baron Jesavar's estate wine cellar. The QI records office in the southern estate district holds the file: "Subject: Tu'buks — Ritual Convergence." This is the actual mission objective. The party does not yet know QI took him or that the file exists.</li>
+          <li>Wendric Solau is dead inside the passage at approximately 25 paces — killed by Bettric under Orun's puppet control via an enchanted earring. His body, his partially decoded Unblinded letter, and the original cultist dead-drop cipher are still on his person.</li>
+          <li>Bettric knows the body is there and cannot get to it alone. She is terrified, playing dumb, and hoping the restricted section stays sealed. The earring she wears is Orun's control mechanism — she does not know this.</li>
+          <li>Orun now has all three Tu'buks documents including Document 3, which names Kulinan Furia. He is moving to neutralise the party.</li>
+          <li>Albertun may have already spoken with the real Headmistress. Koya's infiltration may be blown.</li>
+          <li>Captain Varelia Sorn ("Ledger") of Queen's Intelligence may already be tracking the party following their appearance at the watch station.</li>
+          <li>Jesavar knew the passage existed but not that QI used it. When he finds out, it will drive a deep wedge between him and the Crown.</li>
+          <li>A cultist dead-drop letter was placed in a book in the restricted collection by an unknown figure. Wendric found and pocketed the original — it is now on his body. Whoever placed it has not been able to retrieve it. This is a separate thread from Bettric's marginalia system — two spy networks using the same archive, unaware of each other.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Session Recap</div><div class="card-subtitle">What has happened in Soleij</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <h3>Act 1 — The High Archive</h3>
+      <p>The party entered the High Archive and located Albertun — Tu'buks's research partner. Using pressure from the Headmistress's presence, they recovered all three documents Tu'buks had left behind: a stellar alignment chart with red-ink annotations, troll biology research notes containing an unexpected discovery, and a torn fragment referencing a name.</p>
+      <h3>Act 2 — Koya's Infiltration</h3>
+      <p>Koya remained behind to surveil Albertun while the others found lodging. Using his Shapeshifter ability he transformed into the Headmistress's likeness and compelled Albertun to escort him to the restricted section. Inside, Koya detected the unmistakeable stench of something decaying behind the west wall. He and Albertun searched the shelving but could not find any mechanism. Then Albertun panicked and fled, and Koya was forced to pursue him rather than continue searching.</p>
+      <p><em>The passage behind the west wall was not opened. The trigger was not found.</em></p>
+      <h3>Act 3 — The Watch Station</h3>
+      <p>Sael, Palento, and Diego were confronted by the city watch at the archive entrance and escorted to the watch station for questioning. Captain Torvald Brek is investigating the disappearance of Tu'buks on the same night two of his watchmen died. He is professionally suspicious and made no secret of it. During the interrogation, everyone in the room was paralysed. When it passed, the three documents Diego had been carrying were gone.</p>
+      <h3>Act 4 — The Tavern on the Hill</h3>
+      <p>The party found lodging at the Tavern on the Hill — the same establishment where Tu'buks stayed during his time in Soleij. This is where the session ended.</p>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — What actually happened</div>
+        <p>Master Vedris Orun used Unnoticeable to enter the watch station invisibly, then used a master-level paralysing ability to freeze everyone present. He relieved Diego of all three documents and departed without trace. Diego alone passed his Resolute test and was aware — though paralysed — of the theft as it happened. He saw the outline of something that should not have been there. This knowledge is exclusively Diego's for now.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--blood);">Critical:</strong> Orun now has Document 3, which names Kulinan Furia. He is in damage-control mode and will move against the party.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ THE PARTY ═══ -->
+  <div class="section-label">The Party</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Koya</div><div class="card-subtitle">Intelligence & Operations Lead · Changeling</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="role-line">Jade Crickets Inner Circle · Shapeshifter · Intelligence Arm Commander</div>
+      <p>Koya oversees the intelligence arm of the Jade Crickets — a network of liberated changelings who serve as Fergus's eyes beyond Thistle Hold. Freed from slavery beneath Thistle Hold during the original party's early operations, given command of the intelligence network when Fergus restructured the organisation. Present at the Battle of the Womb Mirror.</p>
+      <p><strong>In Soleij:</strong> Infiltrated the High Archive in the Headmistress's likeness. Found the stench of decay behind the west wall but could not locate the passage trigger before Albertun fled.</p>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Koya's hidden weight</div>
+        <p>One of the seven changelings Koya personally liberated was an Unblinded loyalist — the Penitent Mask — operating under deep cover as Kira Anderisi. After Tu'buks was taken, she wounded Sael and stole convergence materials. Koya does not yet know which of the seven it was. The betrayal has fractured him — he remains operational but more cautious and compartmentalised. Traitor identity not yet locked. Cyrun most probable; Ilmora most narratively devastating.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Sael Marakai — The Quiet Blade</div><div class="card-subtitle">Infiltration & Combat · Former Queen's Resolver</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="role-line">Rapier and Dagger Duelist · Permanently Whisper-Voiced · Absolute Loyalty to Fergus</div>
+      <p>A former Mantle Dancer — one of the Crown's elite quiet agents, presumed dead approximately ten years ago. He came to Soleij alongside Kira Anderisi as Tu'buks's escort. When Tu'buks failed to appear at the archive, he and Kira rushed back to his room at the Tavern on the Hill — where Kira turned on him. His throat was cut along an existing scar. He survived. The wound did not heal cleanly. He is now permanently whisper-voiced.</p>
+      <p><strong>Visual:</strong> Wide-brimmed dark hat. Layered dark robes. Crimson sash. Scarred face and grey stubble. Rapier and dagger. When the whisper comes, it is unsettling.</p>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Exposure risk</div>
+        <p>As a former Queen's operative presumed dead, Sael's appearance in Soleij is a significant risk. If Captain Varelia Sorn ("Ledger") encounters him, her Perfect Recall means she will remember him perfectly from any prior encounter — face, fighting style, exact words. Yndaros elites carry the same risk.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Brother Palento Vasuvio</div><div class="card-subtitle">Combat · "Vomit Fist" · "Blood-Dog" · Berserker Priest</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="role-line">Priest of Prios · Berserker · The Party's Blunt Instrument</div>
+      <p>An emerging Prios priest — intelligent, kind, diligent, and beloved by his communities. He found genuine peace in the Church's teachings of non-violence because he needed it. Has had berserker episodes since youth. Wandered until a priest found him and brought him into the order.</p>
+      <p><strong>In Soleij:</strong> Held at the watch station. No confrontation. Paralysed during the event. Did not see what Diego saw.</p>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — The village and the voice</div>
+        <p>Cultists attacked. He remembers a boy seized. He remembers his horse Wilber beheaded. Then a voice, then darkness. When he came back, the village was in ruins — every person and animal dead. One cultist survived, begging in a corner. Palento was holding a blood-covered blade. He dropped it and ran. The berserker episodes have a voice component — origin undefined, potentially significant.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Diego Montequilla</div><div class="card-subtitle">The Face · Charmer · Social Operative</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="role-line">Born the Wrong Brother · Middling Nobility · Holds the Stone of the Eternal Witness</div>
+      <p>Diego opens doors. He talks to people who would not talk to the others. Born the wrong brother in a family of middling nobility — portly now, soft in a way that reads as a man who used to dress for rooms he no longer bothers to enter. People underestimate him. He knows how to speak to people who expect a certain register.</p>
+      <p><strong>Visual:</strong> Dark, thick, slightly overgrown hair. Heavy brow, deep-set intelligent eyes. Full, soft face. Well-made clothes worn carelessly.</p>
+      <p><strong>In Soleij:</strong> Primary negotiator at the archive. Was holding all three documents when the paralysis event occurred at the watch station. When it passed, the documents were gone.</p>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — What Diego knows</div>
+        <p>Diego alone passed his Resolute test during Orun's intervention. He was aware — though paralysed — of the theft. He saw the outline of something that should not have been there and knows the papers were taken by a skilled invisible operative. This makes him uniquely dangerous to Orun — if Orun learns Diego saw him, Diego becomes a priority target.</p>
+        <p style="margin-top:0.5rem;">Diego carries the Stone of the Eternal Witness — gifted pre-Soleij. Three recordings within: The Crack, Abomination's End, Fergus Severing the Thread.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ THE NIGHT OF THE INCIDENT ═══ -->
+  <div class="section-label">The Night Tu'buks Disappeared</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <div><div class="card-title">Kira Anderisi</div><div class="card-subtitle">Scholar & Soldier · Was with Sael · Not Who She Appeared To Be</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="person-desc">An Ambrian woman of thirty or so, lean and capable-looking, with the quiet competence of someone equally at home with a book or a blade. She travelled with Sael as Tu'buks's scholar-companion and informal protection — but the woman they knew was not Kira Anderisi. The real Kira died some time ago, replaced by a changeling spy so thoroughly that no one suspected until it was too late.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The Dead &amp; The Missing</div><div class="card-subtitle">Five people connected to the night of the incident</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:0.9rem; color:var(--stone); font-style:italic; margin-bottom:1rem;">Two watchmen, two archivists, and one senior archivist still unaccounted for — all connected to the same night.</p>
+
+      <h3>City Watch</h3>
+      <div class="person-block">
+        <div class="person-name">Watchman Aldus Pren</div>
+        <div class="person-role">City Watch · Deceased</div>
+        <div class="person-desc">Twenty-eight, sandy-haired, known for working the late gate rotation without complaint. Colleagues describe him as steady and unremarkable — the kind of man the watch runs on.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Watchman Coris Fael</div>
+        <div class="person-role">City Watch · Deceased</div>
+        <div class="person-desc">Thirty-one, stocky, with a young family in the eastern quarter. He had put in for a day shift transfer the week before he died.</div>
+      </div>
+
+      <h3>The Archive</h3>
+      <div class="person-block">
+        <div class="person-name">Archivist Sera Dunt</div>
+        <div class="person-role">High Archive · Ecclesiastical Records · Deceased</div>
+        <div class="person-desc">Late forties, a specialist in ecclesiastical records who had worked the night cataloguing shift for years. Quiet, methodical, rarely spoke about anything outside her work.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Archivist Bram Ossil</div>
+        <div class="person-role">High Archive · Deceased</div>
+        <div class="person-desc">Thirty-five, newer to the archive, still learning the restricted collection protocols. He was covering an extra shift for a colleague.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Wendric Solau</div>
+        <div class="person-role">Senior Archivist · High Archive · Missing</div>
+        <div class="person-desc">A senior archivist in his fifties, grey-bearded and methodical, with a reputation for working late and knowing the restricted collection better than anyone. He was last seen the evening of the incident. No one has been able to account for his whereabouts since.</div>
+      </div>
+
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — What actually happened to each</div>
+        <p><strong style="color:var(--rust);">Aldus Pren &amp; Coris Fael:</strong> Killed by QI agents on their route out of Soleij — witnesses encountered in the city who had to be silenced. Wrong place, wrong time.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Sera Dunt &amp; Bram Ossil:</strong> Killed at the main archive entry desk at the start of the QI operation. Wendric was outside walking the grounds and did not see this.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Wendric Solau:</strong> Dead inside the secret passage at approximately 25 paces. See GM Key Notes — The Night of the Incident for the full account.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ THE CITY ═══ -->
+  <div class="section-label">The City</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <div><div class="card-title">Soleij — The Town</div><div class="card-subtitle">District of Yndarien · Compact fortified stone settlement</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <p>A compact, walled stone town — conservative, memory-obsessed, and protective of its history. The High Archive is its institutional heart; the Chapel of the Radiant Memory its spiritual one. Stone buildings, long winters, and a culture that does not warm quickly to strangers.</p>
+      <h3>Layout</h3>
+      <div class="map-legend">
+        <div class="map-item"><div class="map-dot" style="background:#7a6e62;"></div> Western Gate — NW</div>
+        <div class="map-item"><div class="map-dot" style="background:#8b3a1a;"></div> High Archive — N-Centre</div>
+        <div class="map-item"><div class="map-dot" style="background:#5a7a5a;"></div> Scholar's Quarter — E</div>
+        <div class="map-item"><div class="map-dot" style="background:#8b6914;"></div> Chapel of the Radiant Memory — SE</div>
+        <div class="map-item"><div class="map-dot" style="background:#4a6a8a;"></div> Southern Estate Row — SW</div>
+        <div class="map-item"><div class="map-dot" style="background:#4a4a6a;"></div> West Sewer Access / Tunnels — S</div>
+        <div class="map-item"><div class="map-dot" style="background:#5a8aaa;"></div> River — NE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The High Archive</div><div class="card-subtitle">Restricted Section · The Passage · What Was Found</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <p>The institutional heart of Soleij. Ecclesiastical records and marked volumes on the east wall. A bronze disc mechanism on the west wall — its purpose not yet understood by the party.</p>
+      <h3>What the party recovered</h3>
+      <div class="doc-block">
+        <div class="doc-title">Document 1 — Stellar Alignment Chart</div>
+        <p>A pre-existing archive astronomical survey of the Andonia-Tomol conjunction cycle, covered in red-ink annotations. Two thresholds marked: approximately 18 months, and approximately 24 months. Marginal note: <em>"Not a prophecy. A timetable. Someone built this on purpose."</em></p>
+      </div>
+      <div class="doc-block">
+        <div class="doc-title">Document 2 — Research Notes (Troll Biology)</div>
+        <p>Personal working notes on goblin-ogre-troll biological transition. Midway through, in different ink: <em>"if dispersal is the mechanism, a rite need not happen in one place — it can happen in many simultaneously."</em> Last entry: <em>"I should not write this down. [written down anyway]"</em></p>
+      </div>
+      <div class="doc-block">
+        <div class="doc-title">Document 3 — The Torn Fragment</div>
+        <p>References a name and "distributed archive nodes, no single point of failure." A hand-drawn seven-point schema — inverted containment, the centre is an entrance. Note: <em>"Not Symbarian. Too recent. Someone is rebuilding the wheel."</em></p>
+      </div>
+      <div class="alert-box"><p>All three documents were taken at the watch station. The party retains only what they remember reading.</p></div>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — The Passage (Unsolved · Requires Two People)</div>
+        <p>The passage behind the west wall remains sealed. Requires two people to operate. Wendric's body is inside at approximately 25 paces. The passage exits in Baron Jesavar's estate wine cellar.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Stage 1 — The Lintel:</strong> "The eye of Prios opens at dawn, at zenith, and at the last light before dark." Dawn = east wall. Zenith = ceiling. Last light = west wall.</p>
+        <p style="margin-top:0.4rem;"><strong style="color:var(--rust);">Stage 2 — East Wall:</strong> The marble quarry ledger has no dust. Pulling it reveals a scratched sun symbol. Three sun-marked volumes extended simultaneously. First click.</p>
+        <p style="margin-top:0.4rem;"><strong style="color:var(--rust);">Stage 3 — West Wall:</strong> Press the lower corner of the correct panel to reveal the bronze disc. Rotate to ZENITH. Second click. Ceiling gold-leaf ray (midday only) points west to confirm.</p>
+        <p style="margin-top:0.4rem;"><strong style="color:var(--rust);">Stage 4 — The Spoken Phrase:</strong> <em>"Sarathos edivar Prios, mekana vel thodrim"</em> — from the Solstice Eye prayer in chapel records. Spoken aloud with sequence active, the passage opens.</p>
+        <p style="margin-top:0.5rem;"><em>Inside: 40 paces total. Iron pin holds door open. Midpoint lock at 15 paces. Wendric's body at 25 paces, one hand extended toward the midpoint lock he could not reach.</em></p>
+        <p style="margin-top:0.75rem;"><strong style="color:var(--rust);">Also untouched in the archive:</strong> The Jeseebegai Document (hidden in genealogical records). The Seventh Convergence Node (misfiled under agricultural drainage records, Year 11).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ KEY FIGURES ═══ -->
+  <div class="section-label">Key Figures in Soleij</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The City Watch</div><div class="card-subtitle">Captain Torvald Brek · Known to the party</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="person-block">
+        <div class="person-name">Captain Torvald Brek</div>
+        <div class="person-role">Watch Commander · Investigating the incident</div>
+        <div class="person-desc">A big man gone to fat, with the bearing of someone who was once physically imposing and hasn't quite accepted that he no longer is. He speaks slowly, lets silences do work, and has the institutional arrogance of a man who has sat behind that desk long enough to know people eventually talk.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Corporal Henast Dour</div>
+        <div class="person-role">Ranking Street Guard</div>
+        <div class="person-desc">Mid-forties, heavyset, with a bar-fight scar running jaw to ear. He pushes first and thinks later — but reads real authority when it presents itself and will step back.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Watchman Goro Pell</div>
+        <div class="person-role">City Watch · Grief-driven</div>
+        <div class="person-desc">Twenty-two, with the rawness of someone who hasn't learned to keep grief off his face. He knew the dead watchmen, and he is looking for somewhere to put that.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Watchman Theis</div>
+        <div class="person-role">City Watch · Senior · De-escalating variable</div>
+        <div class="person-desc">Older than Dour by a decade, quieter by a mile. Twenty years on the watch have made him the kind of man who can stand in a room saying nothing useful while somehow preventing it from getting worse.</div>
+      </div>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Brek's investigation &amp; how to use him</div>
+        <p>Brek is investigating Tu'buks's disappearance alongside two dead watchmen. He does not know the connection but is looking for one. He does not know the papers were taken from Diego by an invisible operative while the party sat in his own station — that revelation alone could shift his disposition significantly.</p>
+        <p style="margin-top:0.5rem;">He is a potential asset. If the party can give him a real target — the Unblinded, Bettric, a description of the QI agents — he becomes a force multiplier. If they antagonise him, a significant obstacle. Goro Pell is the dangerous variable — grief-driven and most likely to act unilaterally. Theis is the de-escalating counterweight.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The Unseen Operative</div><div class="card-subtitle">Identity Unknown · As witnessed by Diego <span class="status-pill pill-danger">Active Threat</span></div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="role-line">A skilled invisible operative — deliberate, targeted, entirely unhurried.</div>
+      <p>Dark-skinned, bald, with a close black beard. His eyes are hazel, but tint toward gold in the right light — the kind of detail you notice and don't forget. He was dressed like a gentleman of moderate means, nothing that would draw attention in the right company, and he was entirely unhurried.</p>
+      <p>Diego saw him for only a moment, paralysed, unable to move or speak. The man knew exactly what he was looking for.</p>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Master Vedris Orun · Full Profile</div>
+        <p><strong style="color:var(--rust);">Identity:</strong> Master Vedris Orun, Ordo Magica field researcher. Nominally on scholarly exchange in Soleij for four months. Actually embedded to secure material exposing Kulinan Furia's research network. He has now succeeded — and the stakes have changed entirely.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Character:</strong> Methodical. Patient. Without sentimentality. Does not enjoy violence but does not hesitate when the calculation demands it. Shadow: dark amber shot through with veins of cold blue — like firelight dying in ice. Permanent corruption: 3.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Stats:</strong> Accurate 9 · Cunning 16 · Discreet 13 · Persuasive 12 · Quick 10 · Resolute 15 · Strong 5 · Vigilant 11</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Abilities:</strong></p>
+        <ul class="ability-list">
+          <li>Unnoticeable (master) — renders himself imperceptible; people look through him</li>
+          <li>Bend Will (master) — forces a target to act against their will</li>
+          <li>Confusion (master) — scatters a group's perception and coordination</li>
+          <li>Wizardry (master) · Exceptionally Cunning (adept) · Exceptionally Resolute (adept)</li>
+          <li>Telepathic Interrogation (ritualist, adept) — extracts information from a restrained subject</li>
+          <li>Magic Circle (ritualist, adept) — containment and protection</li>
+        </ul>
+        <p style="margin-top:0.75rem;"><strong style="color:var(--rust);">Current situation:</strong> Has all three documents including Document 3 (Furia named). Now in damage-control mode. Will attempt to fully identify the party, determine what they know, and neutralise them before they can report back. Does not yet know Diego saw him. Does not yet know the party found the stench behind the wall.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Likely next moves:</strong> Use Bettric to learn everything about the party's archive movements. Attempt to identify the party's patron. Consider Telepathic Interrogation on a captured party member. Monitor the Tavern on the Hill.</p>
+        <p style="margin-top:0.5rem;"><em>If he learns Diego saw him, Diego becomes a priority target.</em></p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The earring:</strong> Orun has enchanted an earring worn by Bettric — it allows him to communicate with her and, when needed, take full puppet control of her body. She does not know the earring is the mechanism. She knows only that he can sometimes speak through her and that she is absolutely terrified of him.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Baron Jesavar Soleij</div><div class="card-subtitle">Town Steward · Information Broker · Invitation Not Yet Acted Upon</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="person-desc">Younger than the title suggests — early forties, well-dressed without ostentation, with the careful eyes of someone who has learned that information is worth more than almost anything else. He smiles readily; that is not the same as warmth.</div>
+      <p style="margin-top:0.75rem;">He has already sent his secretary to make contact. The invitation has not yet been acted upon. He will trade information for information.</p>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Key intelligence</div>
+        <p>Jesavar knew the passage existed but did not use it. He has no idea that QI used it to extract Tu'buks through his own estate wine cellar. When he discovers this, he will be livid — it will deepen his alignment with the Church over the Crown and create a significant political wedge the party can exploit.</p>
+        <p style="margin-top:0.5rem;">He suspects one of his archivists is compromised but has not identified Bettric. He may have noted her wandering his estate grounds the morning after the incident — disoriented, with no explanation. Some of his staff noticed. This is a dormant clue that could lead him to her. If the party helps him identify the leak, he becomes a genuine ally.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">His secretary</strong> — the sharpest person in most rooms she enters. Warm, precise, socially skilled. She is the door to Jesavar.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Dowager Baroness Eudela Soleij</strong> — ultimate authority in the barony, not present. Mother of First Father Jeseebegai and of Levia, Master of the local Ordo Magica Order. Widely believed to have orchestrated assassination attempts on the self-proclaimed King Mergai of New Dekanor. Shadow: rich burgundy with gold undertones. Permanent corruption: 1.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The High Archive — Staff</div><div class="card-subtitle">Valdra Mes · Albertun · and others</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="person-block">
+        <div class="person-name">Valdra Mes — The Headmistress</div>
+        <div class="person-role">Archivist-Senior · 31 years in the building</div>
+        <div class="person-desc">A woman of sixty or so, dressed in archive greys, with the posture of someone who has spent thirty years being the most authoritative person in a room full of books. She is not unkind — she is frightened, and managing it with procedure.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Albertun</div>
+        <div class="person-role">Archivist · Tu'buks's research partner · Panicked and fled · Location unknown</div>
+        <div class="person-desc">Twenty-five, slight, brown-haired and brown-eyed, with the sickly complexion of someone who has barely seen the sun — he has worked in the archive since he was twelve and it shows. He is not built for confrontation and knows it; when the pressure came he held longer than expected, then broke cleanly.</div>
+      </div>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Hidden roles &amp; risks</div>
+        <p><strong style="color:var(--rust);">Valdra Mes:</strong> Not corrupt. Frightened. Albertun was escorted to the restricted section by someone he believed was her. If and when the real Valdra Mes speaks to Albertun, she will know something happened. Koya's infiltration may already be blown.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Albertun:</strong> May be hiding, may have gone to the Headmistress, or may be trying to leave town. If he talks to Valdra Mes, the infiltration is exposed. If he talks to Orun's people, the party's interest in the restricted section is confirmed.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Bettric</strong> — Female archivist, mid-twenties, mousy, nervous, over-helpful. Orun's embedded informant. Reports to Orun via the enchanted earring. Uses the restricted collection as a dead-drop via marginalia in Unblinded ritual shorthand. She knows Wendric's body is in the passage and cannot access it alone. She is playing dumb, terrified, and hoping the restricted section stays sealed. She is not a willing villain — she is a frightened young woman being puppeted by a man she cannot refuse and doesn't fully understand. Significant roleplay implications if the party corners her.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ GM REFERENCE ═══ -->
+  <div class="section-label">GM Reference</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">GM Key Notes — The Night of the Incident</div><div class="card-subtitle">Full chronology · Wendric's account · What each faction did</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="gm-spoiler" style="margin-top:0;">
+        <div class="gm-spoiler-label">⚿ GM — Full Chronology</div>
+        <p><strong style="color:var(--rust);">Early evening — QI moves:</strong> Four masked QI agents enter the archive late in the evening, moving with purpose. They kill Sera Dunt and Bram Ossil at the main entry desk quickly and quietly. Wendric is walking the outside grounds and does not see this. He does see the four agents enter and, already suspicious — he has recently found a cipher letter stashed in a restricted collection book by an unknown figure one evening, pocketed it impulsively, and has been trying to decode it — he decides to tail them inside.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The extraction:</strong> The agents navigate directly to the restricted section as if they know the building. Bettric is already hiding near the stairhead — she heard something was wrong. Wendric and Bettric join up silently and follow the agents down. They watch as the four agents work through the four-stage passage unlock sequence — requiring two people — then usher Tu'buks out. He is bound, hooded, at daggerpoint. The passage closes behind them.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The decision:</strong> Wendric and Bettric, in hushed panic, decide to follow. They repeat the unlock sequence and open the passage themselves. They enter.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Orun acts:</strong> Bettric has been quietly updating Orun through the enchanted earring she wears — she does not know the earring is the mechanism. He takes remote puppet control of her body. Under his command, Bettric stabs Wendric and leaves him in the passage. Orun's logic: no witnesses, no loose threads. He does not yet know the agents are QI — only that something significant is happening involving Tu'buks and he wants it contained.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The exit:</strong> Still under Orun's partial control, Bettric follows the passage to its end — Baron Jesavar's estate wine cellar. The QI agents are already gone with Tu'buks. Bettric is found shortly after wandering the estate grounds, disoriented, with no coherent explanation. Some of Jesavar's staff noticed. This is a dormant clue.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Wendric bleeds out</strong> alone in the passage at approximately 25 paces. His body, the original partially-decoded Unblinded cipher letter he pocketed from the restricted collection, and whatever else he carried are still on his person. He never found out who placed the letter or who was meant to retrieve it.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Same night in the city:</strong> The QI agents encounter Watchmen Aldus Pren and Coris Fael somewhere on their route out of Soleij — witnesses who had to be silenced. Both are killed.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Separately — at the Tavern on the Hill:</strong> Sael and Kira (the changeling posing as Kira Anderisi) go to the archive looking for Tu'buks when he fails to appear. He is not there. They rush back to his room at the Tavern on the Hill. He is gone. While they search his room in panic, the changeling finds copies of materials — evidence of a large-scale ritual effort not seen in generations, and something suggesting a senior Ordo Magica voice knows the Dark Lord still lives. She takes the materials. Then she turns on Sael — cuts his throat along the old scar and leaves him for dead. She disappears into the city.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The next day — Bettric's problem:</strong> Back under her own control but operating under Orun's orders, Bettric returns to the restricted section intending to deal with Wendric's body. She cannot open the passage alone — two people required. She panics, then resolves to play dumb. The restricted section is already off-limits. She tells Orun she cannot access the body. He accepts this for now. The smell begins. She says nothing, takes the same ignorant stance as Albertun, and hopes the problem stays sealed.</p>
+        <p style="margin-top:0.75rem; font-style:italic; color:var(--stone);">The cultist who placed the dead-drop letter in the restricted collection has not been able to retrieve it. Whoever they are, they know the letter is missing. That thread is still live.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">GM Key Notes — Others Involved</div><div class="card-subtitle">Field presence in Soleij · Identity unknown to party</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="gm-spoiler" style="margin-top:0;">
+        <div class="gm-spoiler-label">⚿ GM — Captain Varelia Sorn · "Ledger"</div>
+        <p>Queen's Intelligence field operative. Alias: Ledger. Leads a quiet containment and extraction unit. May already be watching given the party's documented presence at the watch station and their known interest in the archive.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Perfect Recall:</strong> Remembers faces, fighting styles, exact words, and who hesitated or lied. If she sees any party member in Soleij, she will remember them perfectly in any future encounter — regardless of disguise, time elapsed, or context. A recurring antagonist threat that cannot be mitigated by simple caution.</p>
+        <p style="margin-top:0.5rem;">Tu'buks is detained. The QI file exists in the southern estate district records office. The party's visit to the watch station is now on record. Sorn may be moving.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The Seven Changeling Operatives</div><div class="card-subtitle">Jade Crickets intelligence arm · One is unaccounted for</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:0.9rem; color:var(--ink-light); margin-bottom:1rem;">Seven changelings were liberated by Koya and Fergus. They form the intelligence arm of the Jade Crickets. One of them — operating as Kira Anderisi — accompanied Tu'buks to Soleij. That operative is now at large.</p>
+      <div class="person-block"><div class="person-name">Ilmora</div><div class="person-role">Core operative · Close to Koya</div><div class="person-desc">One of Koya's most trusted. Embedded at the centre of the intelligence network. Reliable by every observable measure.</div></div>
+      <div class="person-block"><div class="person-name">Vaelk</div><div class="person-role">Core operative · Steady</div><div class="person-desc">Operationally reliable. Consistent. Has raised no concerns in the network.</div></div>
+      <div class="person-block"><div class="person-name">Eryssa</div><div class="person-role">Core operative · Reserved</div><div class="person-desc">Answers questions directly but rarely volunteers information. Capable. Keeps to herself.</div></div>
+      <div class="person-block"><div class="person-name">Sareth</div><div class="person-role">Peripheral operative</div><div class="person-desc">Less embedded in the core network. Handles tasks at the edges of operations. Competent but not exceptional.</div></div>
+      <div class="person-block"><div class="person-name">Nethren</div><div class="person-role">Peripheral operative · Divided loyalties</div><div class="person-desc">His loyalties were divided before liberation and remain divided after it. Known sympathies toward the Iron Pact.</div></div>
+      <div class="person-block"><div class="person-name">Thalos</div><div class="person-role">Peripheral operative · Currently absent</div><div class="person-desc">Has not made contact recently. Whereabouts unknown. No explanation given.</div></div>
+      <div class="person-block"><div class="person-name">Cyrun</div><div class="person-role">Withdrawn · No longer active</div><div class="person-desc">Was integrated into the network, then withdrew entirely. Offered no reason. Has not been seen since around the time of the Soleij Incident.</div></div>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — The Penitent Mask · Risk Analysis</div>
+        <p>One of these seven is an Unblinded loyalist who chose the cult freely after severance — ideology, not coercion. Operated as Kira Anderisi in Soleij; wounded Sael and stole convergence materials; funnelled them to Vintronius. Currently at large. Identity is a GM decision, not yet locked.</p>
+        <div style="margin-top:0.75rem; display:flex; flex-direction:column; gap:0.4rem;">
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Ilmora</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Low — Most devastating if guilty. Betrayal would be total.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Vaelk</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Very low — Almost too clean, which is itself a flag.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Eryssa</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Medium — Opaque. Deliberate distance-keeping.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Sareth</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Medium — Peripheral placement could have been strategic.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Nethren</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Medium-high — Divided loyalty is a manipulation vector.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Thalos</strong><div class="risk-dots"><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">High — Absence coincides exactly with the Soleij Incident.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--blood); min-width:70px;">Cyrun</strong><div class="risk-dots"><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div></div><span style="font-size:0.72rem; color:var(--stone);">Very high — Most probable. Active then withdrawn at exactly the right moment.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Faction Pressures</div><div class="card-subtitle">Five active interests operating simultaneously in Soleij</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="gm-spoiler" style="margin-top:0;">
+        <div class="gm-spoiler-label">⚿ GM</div>
+        <div class="person-block"><div class="person-name">Fergus / Jade Crickets</div><div class="person-desc">The party. True objective: the QI file in the southern estate district, no trace of Thistle Hold. Primary objective not yet attempted. Documents lost to Orun.</div></div>
+        <div class="person-block"><div class="person-name" style="color:var(--blood);">Ordo Magica — Orun <span class="status-pill pill-danger">Active</span></div><div class="person-desc">Has all three documents including Document 3 (Furia named). Elevated threat. Moving to neutralise the party. Using Bettric as a puppet asset via the enchanted earring.</div></div>
+        <div class="person-block"><div class="person-name">Queen's Intelligence — Sorn</div><div class="person-desc">Tu'buks is detained. The QI file exists. Party's watch station appearance is on record. Sorn may already be moving.</div></div>
+        <div class="person-block"><div class="person-name">Captain Torvald Brek — City Watch</div><div class="person-desc">Not a faction, but a significant variable. Potential asset on the dead watchmen question. Currently monitoring the party.</div></div>
+        <div class="person-block"><div class="person-name">Baron Jesavar Soleij</div><div class="person-desc">Invitation not acted upon. Does not yet know QI used his estate passage. When he finds out, he becomes a potentially powerful ally — and the Crown loses a friend.</div></div>
+        <div class="person-block" style="border-bottom:none;"><div class="person-name">The Unblinded — Absent but present</div><div class="person-desc">The changeling operative is at large. The original cipher letter on Wendric's body connects them directly. The unknown cultist who placed the dead-drop cannot retrieve it. Two separate threads, both still live.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Throne of Thorns Campaign · Soleij Arc · GM Reference · All party members are male</footer>
+
+</div>
+<script>
+  const GM_PASS = "thornsofsoleij";
+  let gmUnlocked = false;
+
+  function setGMVisibility(visible) {
+    document.querySelectorAll('.gm-spoiler').forEach(el => {
+      el.style.setProperty('display', visible ? 'block' : 'none', 'important');
+    });
+    document.querySelectorAll('.tag-gm').forEach(el => {
+      el.style.setProperty('display', visible ? 'inline-block' : 'none', 'important');
+    });
+    document.querySelectorAll('.card').forEach(card => {
+      const hasPlayer = card.querySelector('.tag-player');
+      const hasGM = card.querySelector('.tag-gm');
+      if (hasGM && !hasPlayer) {
+        const body = card.querySelector('.card-body');
+        if (body) {
+          if (!visible) { body.style.setProperty('display', 'none', 'important'); card.dataset.gmLocked = 'true'; }
+          else { body.style.removeProperty('display'); card.dataset.gmLocked = ''; }
+        }
+      }
+    });
+    document.querySelector('.gm-status').style.display = visible ? 'block' : 'none';
+    document.querySelector('.gm-relock').style.display = visible ? 'inline-block' : 'none';
+    const passInput = document.getElementById('gm-pass');
+    const unlockBtn = document.querySelector('.gm-btn:not(.gm-relock)');
+    passInput.style.display = visible ? 'none' : '';
+    unlockBtn.style.display = visible ? 'none' : '';
+  }
+
+  window.addEventListener('DOMContentLoaded', () => { setGMVisibility(false); });
+
+  function tryUnlock() {
+    const input = document.getElementById('gm-pass');
+    const err = document.getElementById('gm-error');
+    if (input.value.toLowerCase().trim() === GM_PASS) {
+      gmUnlocked = true; setGMVisibility(true); err.style.display = 'none'; input.value = '';
+    } else {
+      err.style.display = 'block'; input.style.borderColor = '#a04040';
+      setTimeout(() => { err.style.display = 'none'; input.style.borderColor = ''; }, 2500);
+    }
+  }
+
+  function reLock() { gmUnlocked = false; setGMVisibility(false); }
+
+  document.getElementById('gm-pass').addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+  function toggleCard(header) {
+    const card = header.parentElement;
+    if (card.dataset.gmLocked === 'true') return;
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
