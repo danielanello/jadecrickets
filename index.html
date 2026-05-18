@@ -90,6 +90,16 @@
   .doc-block { background: rgba(139,105,20,0.06); border: 1px solid rgba(139,105,20,0.25); border-top: 3px solid var(--gold); padding: 0.85rem 1rem; margin: 0.75rem 0; border-radius: 1px; }
   .doc-title { font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600; color: var(--rust); letter-spacing: 0.08em; margin-bottom: 0.4rem; }
 
+  .marginal-block { background: rgba(139,105,20,0.04); border: 1px dashed rgba(139,105,20,0.3); padding: 0.75rem 1rem; margin: 0.5rem 0; border-radius: 1px; }
+  .marginal-entry { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: var(--ink); line-height: 1.6; padding: 0.3rem 0; border-bottom: 1px dotted rgba(139,105,20,0.2); }
+  .marginal-entry:last-child { border-bottom: none; }
+
+  .location-entry { padding: 0.85rem 0; border-bottom: 1px dashed rgba(139,105,20,0.2); }
+  .location-entry:last-child { border-bottom: none; }
+  .location-name { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; color: var(--rust); margin-bottom: 0.15rem; }
+  .location-date { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.78rem; color: var(--stone); margin-bottom: 0.35rem; }
+  .location-desc { font-size: 0.92rem; color: var(--ink-light); line-height: 1.5; }
+
   .ability-list { margin: 0.4rem 0; }
   .ability-list li { font-size: 0.9rem; color: var(--ink-light); padding: 0.2rem 0 0.2rem 1rem; position: relative; }
   .ability-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
@@ -108,6 +118,10 @@
 
   .alert-box { background: rgba(107,21,21,0.06); border: 1px solid rgba(107,21,21,0.3); border-left: 3px solid var(--blood); padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 2px 2px 0; }
   .alert-box p { color: var(--blood); font-size: 0.9rem; }
+
+  .final-page-block { background: var(--parchment-mid); border: 1px solid var(--gold); border-top: 3px solid var(--rust); padding: 1rem 1.25rem; margin-top: 1rem; text-align: center; }
+  .final-page-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); margin-bottom: 0.5rem; }
+  .final-page-text { font-family: 'IM Fell English', serif; font-size: 1.15rem; color: var(--rust); font-style: italic; line-height: 1.6; }
 
   footer { text-align: center; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,212,168,0.2); margin-top: 3rem; padding-top: 1rem; border-top: 1px solid rgba(240,212,168,0.1); }
 
@@ -144,13 +158,16 @@
   <div class="status-banner">
     <h2>Where the mission stands</h2>
     <div class="detail-grid">
-      <div class="detail-item"><div class="detail-label">Location</div><div class="detail-value">Tavern on the Hill, Soleij</div></div>
+      <div class="detail-item"><div class="detail-label">Location</div><div class="detail-value">Soleij — Active Operations</div></div>
       <div class="detail-item"><div class="detail-label">Primary Objective</div><div class="detail-value">Find Tu'buks <span class="status-pill pill-active">In Progress</span></div></div>
-      <div class="detail-item"><div class="detail-label">Documents</div><div class="detail-value">Lost — taken at watch station <span class="status-pill pill-danger">Compromised</span></div></div>
+      <div class="detail-item"><div class="detail-label">Documents</div><div class="detail-value">Lost at watch station <span class="status-pill pill-danger">Compromised</span></div></div>
+      <div class="detail-item"><div class="detail-label">Tu'buks's Book</div><div class="detail-value">In party possession <span class="status-pill pill-done">Secured</span></div></div>
+      <div class="detail-item"><div class="detail-label">Ambush Crew</div><div class="detail-value">3 dead · 1 in watch custody <span class="status-pill pill-unknown">Thessan at large</span></div></div>
       <div class="detail-item"><div class="detail-label">Party Status</div><div class="detail-value">Known to city watch <span class="status-pill pill-unknown">Monitored</span></div></div>
     </div>
   </div>
 
+  <!-- OPEN THREADS -->
   <div class="card open">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
@@ -162,29 +179,37 @@
     </div>
     <div class="card-body">
       <ul class="thread-list">
-        <li>Tu'buks disappeared from Soleij. Someone took him. The archive held clues — those documents are now gone.</li>
+        <li>Tu'buks disappeared from Soleij. Someone took him. The archive documents are gone — but the book survived.</li>
         <li>The passage behind the west wall of the restricted section — the trigger was not found. The stench of decay was unmistakeable.</li>
-        <li>The Tavern on the Hill — Tu'buks stayed here. His room may hold something.</li>
         <li>The Baron's invitation — Jesavar Soleij sent word. Has not been acted upon.</li>
         <li>The invisible operative — Diego knows what he saw. The others know only that the papers are gone.</li>
-        <li>Five people connected to the night Tu'buks disappeared are dead or missing — two watchmen, two archivists, and the senior archivist Wendric Solau, who has not been found.</li>
+        <li>Five people connected to the night Tu'buks disappeared are dead or missing — two watchmen, two archivists, and Wendric Solau, who has not been found.</li>
+        <li>Thessan — the sharpshooter from the ambush — escaped. He has a rendezvous point north of the city where two waterfalls meet a brook. The window on that is unknown.</li>
+        <li>Sill is in city watch custody. Captain Brek now has a direct connection to the ambush and will want to speak with the party again.</li>
+        <li>The woman whittling wooden dowels in the tavern common room — she did not speak to the party, drew no attention to herself, and has not been identified.</li>
+        <li>Tu'buks's four locations are unvisited: the Chapel, a southern estate address, Helvane Doss's residence, and the western gate guard post.</li>
+        <li>The book names Osvel — a junior priest at the Chapel of Radiant Memory. Tu'buks trusted him. He has not been approached.</li>
       </ul>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — Hidden threads</div>
         <ul class="thread-list">
-          <li>Queen's Intelligence detained Tu'buks and extracted him through the secret passage — exiting through Baron Jesavar's estate wine cellar. The QI records office in the southern estate district holds the file: "Subject: Tu'buks — Ritual Convergence." This is the actual mission objective. The party does not yet know QI took him or that the file exists.</li>
+          <li>Queen's Intelligence detained Tu'buks and extracted him through the secret passage — exiting through Baron Jesavar's estate wine cellar. The QI records office in the southern estate district holds the file: "Subject: Tu'buks — Ritual Convergence." This is the actual mission objective. The party does not yet know QI took him or that the file exists. Tu'buks walked directly to it without knowing what it was.</li>
           <li>Wendric Solau is dead inside the passage at approximately 25 paces — killed by Bettric under Orun's puppet control via an enchanted earring. His body, his partially decoded Unblinded letter, and the original cultist dead-drop cipher are still on his person.</li>
-          <li>Bettric knows the body is there and cannot get to it alone. She is terrified, playing dumb, and hoping the restricted section stays sealed. The earring she wears is Orun's control mechanism — she does not know this.</li>
-          <li>Orun now has all three Tu'buks documents including Document 3, which names Kulinan Furia. He is moving to neutralise the party.</li>
-          <li>Albertun may have already spoken with the real Headmistress. Koya's infiltration may be blown.</li>
-          <li>Captain Varelia Sorn ("Ledger") of Queen's Intelligence may already be tracking the party following their appearance at the watch station.</li>
+          <li>Bettric knows the body is there and cannot get to it alone. She is terrified and playing dumb. The earring she wears is Orun's control mechanism — she does not know this. Her name appears in Tu'buks's book flagged as suspicious — if the party connects this, Bettric becomes an immediate target.</li>
+          <li>Orun now has all three Tu'buks documents including Document 3, which names Kulinan Furia. He is moving to neutralise the party. He does not know the party has the book — which is more dangerous than everything he took.</li>
+          <li>The woman in the tavern was Captain Varelia Sorn ("Ledger") — QI field operative. She recognised Sael on sight via Perfect Recall. She activated the ambush crew after leaving. Her crew is now broken — three dead, one in watch custody, Thessan in the wind. Sorn is reassessing. She is one step behind the party for the first time.</li>
+          <li>The wooden dowels are Sorn's communication method. The party has seen them without knowing their significance. The connection will land when dowels appear again — at the rendezvous point, near a dead drop, or inside the QI records office.</li>
           <li>Jesavar knew the passage existed but not that QI used it. When he finds out, it will drive a deep wedge between him and the Crown.</li>
-          <li>A cultist dead-drop letter was placed in a book in the restricted collection by an unknown figure. Wendric found and pocketed the original — it is now on his body. Whoever placed it has not been able to retrieve it. This is a separate thread from Bettric's marginalia system — two spy networks using the same archive, unaware of each other.</li>
+          <li>Helvane Doss told Tu'buks about a buried structure approximately a mile and a half southwest of Soleij beneath a low ridge locals call the Grey Back. This shook him visibly. What the structure actually is remains a GM decision.</li>
+          <li>The name on the last page — Osvel — is a junior priest at the Chapel of Radiant Memory. He noticed the same liturgical gap Tu'buks found. He does not know he has been named. He does not know Tu'buks is missing.</li>
+          <li>A cultist dead-drop letter was placed in a restricted collection book by an unknown figure. Wendric found and pocketed the original — now on his body in the passage. Whoever placed it cannot retrieve it. This thread is still live.</li>
+          <li>Albertun may have already spoken with the real Headmistress. Koya's infiltration may be blown.</li>
         </ul>
       </div>
     </div>
   </div>
 
+  <!-- SESSION RECAP -->
   <div class="card">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
@@ -196,18 +221,135 @@
     </div>
     <div class="card-body">
       <h3>Act 1 — The High Archive</h3>
-      <p>The party entered the High Archive and located Albertun — Tu'buks's research partner. Using pressure from the Headmistress's presence, they recovered all three documents Tu'buks had left behind: a stellar alignment chart with red-ink annotations, troll biology research notes containing an unexpected discovery, and a torn fragment referencing a name.</p>
+      <p>The party entered the High Archive and located Albertun — Tu'buks's research partner. Using pressure from the Headmistress's presence, they recovered all three documents Tu'buks had left behind: a stellar alignment chart with red-ink annotations, troll biology research notes, and a torn fragment referencing a name.</p>
+
       <h3>Act 2 — Koya's Infiltration</h3>
-      <p>Koya remained behind to surveil Albertun while the others found lodging. Using his Shapeshifter ability he transformed into the Headmistress's likeness and compelled Albertun to escort him to the restricted section. Inside, Koya detected the unmistakeable stench of something decaying behind the west wall. He and Albertun searched the shelving but could not find any mechanism. Then Albertun panicked and fled, and Koya was forced to pursue him rather than continue searching.</p>
+      <p>Koya remained behind and transformed into the Headmistress's likeness, compelling Albertun to escort him to the restricted section. Inside, the unmistakeable stench of decay came from behind the west wall. He and Albertun searched but could not find the mechanism. Albertun panicked and fled.</p>
       <p><em>The passage behind the west wall was not opened. The trigger was not found.</em></p>
+
       <h3>Act 3 — The Watch Station</h3>
-      <p>Sael, Palento, and Diego were confronted by the city watch at the archive entrance and escorted to the watch station for questioning. Captain Torvald Brek is investigating the disappearance of Tu'buks on the same night two of his watchmen died. He is professionally suspicious and made no secret of it. During the interrogation, everyone in the room was paralysed. When it passed, the three documents Diego had been carrying were gone.</p>
+      <p>Sael, Palento, and Diego were escorted to the watch station by Captain Torvald Brek, who is investigating Tu'buks's disappearance alongside two dead watchmen. During the interrogation everyone in the room was paralysed. When it passed, the three documents Diego had been carrying were gone.</p>
+
       <h3>Act 4 — The Tavern on the Hill</h3>
-      <p>The party found lodging at the Tavern on the Hill — the same establishment where Tu'buks stayed during his time in Soleij. This is where the session ended.</p>
+      <p>The party spoke with Aldric Wenn — the tavern keeper, a heavyset widower in his fifties who knew Tu'buks personally as a quiet, reliable guest. Aldric was wary but responded to genuine warmth. Tu'buks's old room had been cleaned and re-let to a travelling wool merchant. Behind the headboard the party found a hidden note — a list of four locations in Soleij written in Tu'buks's personal shorthand, each with a date beside it. Aldric then directed the party to meet him out back, where he handed over a box of Tu'buks's remaining belongings: clothes, a writing kit, two books — one of them covered in marginalia throughout, with a name written small on the last page.</p>
+
+      <h3>Act 5 — The Ambush</h3>
+      <p>The handoff was ambushed by a four-person freelance crew with no identifying marks. A sharpshooter named Thessan opened from a rooftop, targeting Sael specifically and aiming for his throat scar. Sael avoided the first bolt. The second was absorbed by his armour. The party fought and won — three attackers killed, one captured. The captive, Sill, was interrogated and handed to the city watch. Thessan escaped without being seen clearly.</p>
+      <p>Sill gave up one piece of information: Thessan had a rendezvous point for after the job — north of the city, where two waterfalls meet at a brook.</p>
+      <p>Before the ambush, passing through the common room, the party noticed a woman sitting alone — very petite, dirty blonde hair, brown eyes — whittling wooden dowels. She did not speak to them or draw attention to herself.</p>
+
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — What actually happened</div>
-        <p>Master Vedris Orun used Unnoticeable to enter the watch station invisibly, then used a master-level paralysing ability to freeze everyone present. He relieved Diego of all three documents and departed without trace. Diego alone passed his Resolute test and was aware — though paralysed — of the theft as it happened. He saw the outline of something that should not have been there. This knowledge is exclusively Diego's for now.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--blood);">Critical:</strong> Orun now has Document 3, which names Kulinan Furia. He is in damage-control mode and will move against the party.</p>
+        <p><strong style="color:var(--rust);">The watch station theft:</strong> Master Vedris Orun used Unnoticeable to enter invisibly and a master-level paralysing ability to freeze everyone. He took all three documents from Diego. Diego alone passed his Resolute test and saw him — paralysed, unable to speak. This knowledge is exclusively Diego's.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The woman in the tavern:</strong> Captain Varelia Sorn — QI field operative, alias Ledger. She recognised Sael on sight via Perfect Recall. She activated the ambush crew after leaving the common room. Her crew is now broken. Sorn is reassessing and is one step behind the party for the first time.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The wooden dowels:</strong> Sorn's communication method. The party has seen them without knowing their significance.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--blood);">Critical:</strong> Orun has Document 3, which names Kulinan Furia. He does not know the party has the book — which is more dangerous than everything he took at the watch station.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TU'BUKS'S BOOK ═══ -->
+  <div class="section-label">Tu'buks's Book</div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The Margins of Convergence</div><div class="card-subtitle">Recovered from Aldric Wenn · Tu'buks's working journal</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <p>A mid-sized published academic text — a dry scholarly work on Ambrian land survey methodology that nobody would look twice at. The kind of book a travelling scholar carries as professional camouflage. The cover is worn, the spine cracked from heavy use, and it smells faintly of the archive — old paper, tallow candle, and damp stone. Tu'buks has been using it for years. It came with him from Thistle Hold. The published text is almost irrelevant. The book belongs to the margins now.</p>
+
+      <h3>Layer One — Old Notes</h3>
+      <p>Academic cross-references, page numbers pointing to other texts, the ordinary working notes of a thorough researcher. Goblins, ogres, troll biology. Astronomical tables. References to Symbarian burial practice. Tu'buks's normal scholarly voice — precise, impersonal, slightly pedantic. Nothing alarming here unless you already know what you're looking for.</p>
+
+      <h3>Layer Two — The Shift</h3>
+      <p>Somewhere in the middle of the book the handwriting changes. Still Tu'buks, but tighter, faster, the letters compressed like a man writing quickly and not entirely comfortable with what he's writing. This is where the convergence thread begins to appear.</p>
+      <div class="marginal-block">
+        <div class="marginal-entry">"Dispersal confirmed in at least three independent sources — not one site, many."</div>
+        <div class="marginal-entry">"The conjunction window is not approximate. Someone calculated this."</div>
+        <div class="marginal-entry">"Furia's name appears again. Third time. Cannot be coincidence."</div>
+        <div class="marginal-entry">"The rite does not require a single location. This changes everything."</div>
+        <div class="marginal-entry">"If I am right the archive here has been partially cleaned. Someone got here first."</div>
+      </div>
+      <p>These notes don't form a complete argument — they're the live edge of a mind working through something alarming in real time. A careful reader could reconstruct most of what Tu'buks concluded.</p>
+
+      <h3>Layer Three — Soleij Specific</h3>
+      <p>The most recent notes, written during his time here. Shorter. More cautious. The handwriting is controlled again — not the precision of a scholar, the precision of someone being careful.</p>
+      <div class="marginal-block">
+        <div class="marginal-entry">Observations about archive staff — Wendric noted by name as trustworthy. Bettric noted: "watches the restricted section door more than her work warrants."</div>
+        <div class="marginal-entry">A rough sketch of the passage west wall with a question mark beside it.</div>
+        <div class="marginal-entry">"Administrative office — no name, no register entry. Turned away. Someone is here who should not be." [beside the southern estate address]</div>
+        <div class="marginal-entry">The cartographer's name — Helvane Doss — circled, with the word "confirmed" beside it and three lines underneath.</div>
+        <div class="marginal-entry">"The gate. Green wheel. Soldiers dressed as merchants. This is how they move. I need to leave Soleij." [final entry — four days before he disappeared]</div>
+      </div>
+      <p>He did not leave in time.</p>
+
+      <div class="final-page-block">
+        <div class="final-page-label">Final Page — Written separately, in careful unhurried script</div>
+        <div class="final-page-text">"Speak to Osvel. Chapel. He noticed the gap."</div>
+      </div>
+
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Why this book changes everything</div>
+        <p>This book is the most dangerous object the party is currently carrying. It contains Furia's name written in Tu'buks's hand connected explicitly to convergence ritual theory, a direct observation of QI logistics movement through the western gate, a notation about the southern estate address pointing directly at the records office, Bettric flagged as suspicious by name, and a path to Osvel at the chapel.</p>
+        <p style="margin-top:0.5rem;">Orun searched Tu'buks's room and missed it — it was in Aldric's box of belongings, not in the room itself. If Orun ever learns the party has this book, everything escalates immediately. It is more valuable and more dangerous than the three documents he took at the watch station.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Bettric flagged:</strong> Tu'buks identified her as suspicious before he disappeared, before the room was searched, before the current chaos. If the party connects this to what they already know about the archive, Bettric becomes an immediate and actionable target.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The southern estate address:</strong> Tu'buks walked directly to the mission objective without knowing what it was. He noted it as a dead end. It is not.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The gate observation:</strong> "Green wheel. Soldiers dressed as merchants." This is QI's logistics signature for moving assets out of Soleij. The party can potentially use this to understand how Tu'buks was moved — and whether the same route is being used again.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Osvel:</strong> Junior priest at the Chapel of Radiant Memory — young, eager, slightly bored. He spotted the same liturgical gap in the records that Tu'buks found and never told anyone because he didn't think it mattered. Tu'buks met him, trusted him, and left his name as a breadcrumb. Osvel doesn't know he's been named. He doesn't know Tu'buks is missing. He just knows a quiet scholar came and asked interesting questions about a gap in the records that nobody had ever asked about before.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TU'BUKS'S LOCATION LIST ═══ -->
+  <div class="section-label">Tu'buks's Location List</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Four Locations · Four Dates</div><div class="card-subtitle">Found hidden behind the headboard · Written in Tu'buks's shorthand</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:0.9rem; color:var(--stone); font-style:italic; margin-bottom:1rem;">The dates span approximately three weeks, ending four days before he disappeared.</p>
+
+      <div class="location-entry">
+        <div class="location-name">The Chapel of Radiant Memory</div>
+        <div class="location-date">Earliest date — approximately three weeks before disappearance</div>
+        <div class="location-desc">Tu'buks visited the Chapel's ecclesiastical records. He was cross-referencing astronomical observations against historical Prios liturgical dates. What he found — or didn't find — is unclear. He spoke with at least one member of the chapel staff.</div>
+      </div>
+
+      <div class="location-entry">
+        <div class="location-name">An Address in the Southern Estate District</div>
+        <div class="location-date">Approximately two and a half weeks before disappearance</div>
+        <div class="location-desc">A specific address on the quieter end of the southern estate row. Tu'buks visited in person and was turned away by a clerk who said the office held no historical records. He noted the address and moved on, apparently treating it as a dead end. His book suggests otherwise.</div>
+      </div>
+
+      <div class="location-entry">
+        <div class="location-name">A Private Residence — Scholar's Quarter</div>
+        <div class="location-date">Approximately ten days before disappearance</div>
+        <div class="location-desc">The home of Helvane Doss — a retired cartographer, seventies, nearly blind, formerly one of the most respected mapmakers in Yndarien. Tu'buks had corresponded with her before arriving in Soleij. He visited her personally. He left her house visibly shaken. What she told him is unknown.</div>
+      </div>
+
+      <div class="location-entry">
+        <div class="location-name">The Western Gate Guard Post</div>
+        <div class="location-date">Four days before disappearance — the final entry</div>
+        <div class="location-desc">Tu'buks went to the western gate not to speak to the guards but to watch outbound traffic. He stayed approximately two hours. His book contains a note written that same day: "Green wheel. Soldiers dressed as merchants. This is how they move. I need to leave Soleij."</div>
+      </div>
+
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — What each location actually is</div>
+        <p><strong style="color:var(--rust);">The Chapel:</strong> Tu'buks found a gap in the liturgical records — a period where the astronomical observations simply stop, then resume as if nothing happened. Osvel noticed it too. The gap corresponds to the Symbarian period and has been quietly maintained for a very long time. What it hides is a GM decision, but it connects to the convergence timeline.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The Southern Estate Address:</strong> The QI records office. Tu'buks walked directly to the mission objective without knowing what it was. The clerk who turned him away was QI staff. This address in Tu'buks's shorthand is the clearest pointer the party currently has to their actual objective.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Helvane Doss:</strong> She told Tu'buks about a buried structure approximately a mile and a half southwest of Soleij beneath a low ridge locals call the Grey Back. This is what shook him. She knows it from her years of cartographic survey work — she mapped the ridge and found anomalies she could not explain and eventually stopped asking about. What the structure actually is remains a GM decision.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The Western Gate:</strong> Tu'buks observed QI logistics — the "green wheel" is a cart marking used by QI supply lines running merchant cover. He recognised soldiers posing as merchants. This is how they move people and materials in and out of Soleij without drawing attention. The party could potentially use this intelligence to identify QI movements or trace where Tu'buks was taken.</p>
       </div>
     </div>
   </div>
@@ -250,7 +392,7 @@
       <p><strong>Visual:</strong> Wide-brimmed dark hat. Layered dark robes. Crimson sash. Scarred face and grey stubble. Rapier and dagger. When the whisper comes, it is unsettling.</p>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — Exposure risk</div>
-        <p>As a former Queen's operative presumed dead, Sael's appearance in Soleij is a significant risk. If Captain Varelia Sorn ("Ledger") encounters him, her Perfect Recall means she will remember him perfectly from any prior encounter — face, fighting style, exact words. Yndaros elites carry the same risk.</p>
+        <p>As a former Queen's operative presumed dead, Sael's appearance in Soleij is a significant risk. Captain Varelia Sorn already recognised him at the tavern via Perfect Recall and activated the ambush crew as a result. If Yndaros elites pass through Soleij, the same recognition risk applies.</p>
       </div>
     </div>
   </div>
@@ -267,7 +409,7 @@
     <div class="card-body">
       <div class="role-line">Priest of Prios · Berserker · The Party's Blunt Instrument</div>
       <p>An emerging Prios priest — intelligent, kind, diligent, and beloved by his communities. He found genuine peace in the Church's teachings of non-violence because he needed it. Has had berserker episodes since youth. Wandered until a priest found him and brought him into the order.</p>
-      <p><strong>In Soleij:</strong> Held at the watch station. No confrontation. Paralysed during the event. Did not see what Diego saw.</p>
+      <p><strong>In Soleij:</strong> Held at the watch station during the paralysis event. Did not see what Diego saw. Fought in the ambush.</p>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — The village and the voice</div>
         <p>Cultists attacked. He remembers a boy seized. He remembers his horse Wilber beheaded. Then a voice, then darkness. When he came back, the village was in ruins — every person and animal dead. One cultist survived, begging in a corner. Palento was holding a blood-covered blade. He dropped it and ran. The berserker episodes have a voice component — origin undefined, potentially significant.</p>
@@ -288,10 +430,10 @@
       <div class="role-line">Born the Wrong Brother · Middling Nobility · Holds the Stone of the Eternal Witness</div>
       <p>Diego opens doors. He talks to people who would not talk to the others. Born the wrong brother in a family of middling nobility — portly now, soft in a way that reads as a man who used to dress for rooms he no longer bothers to enter. People underestimate him. He knows how to speak to people who expect a certain register.</p>
       <p><strong>Visual:</strong> Dark, thick, slightly overgrown hair. Heavy brow, deep-set intelligent eyes. Full, soft face. Well-made clothes worn carelessly.</p>
-      <p><strong>In Soleij:</strong> Primary negotiator at the archive. Was holding all three documents when the paralysis event occurred at the watch station. When it passed, the documents were gone.</p>
+      <p><strong>In Soleij:</strong> Primary negotiator at the archive and the tavern. Was holding all three documents when the paralysis event occurred. When it passed, the documents were gone.</p>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — What Diego knows</div>
-        <p>Diego alone passed his Resolute test during Orun's intervention. He was aware — though paralysed — of the theft. He saw the outline of something that should not have been there and knows the papers were taken by a skilled invisible operative. This makes him uniquely dangerous to Orun — if Orun learns Diego saw him, Diego becomes a priority target.</p>
+        <p>Diego alone passed his Resolute test during Orun's intervention. He was aware — though paralysed — of the theft. He saw the outline of something that should not have been there and knows the papers were taken by a skilled invisible operative. If Orun learns Diego saw him, Diego becomes a priority target.</p>
         <p style="margin-top:0.5rem;">Diego carries the Stone of the Eternal Witness — gifted pre-Soleij. Three recordings within: The Crack, Abomination's End, Fergus Severing the Thread.</p>
       </div>
     </div>
@@ -324,7 +466,6 @@
     </div>
     <div class="card-body">
       <p style="font-size:0.9rem; color:var(--stone); font-style:italic; margin-bottom:1rem;">Two watchmen, two archivists, and one senior archivist still unaccounted for — all connected to the same night.</p>
-
       <h3>City Watch</h3>
       <div class="person-block">
         <div class="person-name">Watchman Aldus Pren</div>
@@ -336,7 +477,6 @@
         <div class="person-role">City Watch · Deceased</div>
         <div class="person-desc">Thirty-one, stocky, with a young family in the eastern quarter. He had put in for a day shift transfer the week before he died.</div>
       </div>
-
       <h3>The Archive</h3>
       <div class="person-block">
         <div class="person-name">Archivist Sera Dunt</div>
@@ -353,11 +493,10 @@
         <div class="person-role">Senior Archivist · High Archive · Missing</div>
         <div class="person-desc">A senior archivist in his fifties, grey-bearded and methodical, with a reputation for working late and knowing the restricted collection better than anyone. He was last seen the evening of the incident. No one has been able to account for his whereabouts since.</div>
       </div>
-
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — What actually happened to each</div>
-        <p><strong style="color:var(--rust);">Aldus Pren &amp; Coris Fael:</strong> Killed by QI agents on their route out of Soleij — witnesses encountered in the city who had to be silenced. Wrong place, wrong time.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Sera Dunt &amp; Bram Ossil:</strong> Killed at the main archive entry desk at the start of the QI operation. Wendric was outside walking the grounds and did not see this.</p>
+        <p><strong style="color:var(--rust);">Aldus Pren &amp; Coris Fael:</strong> Killed by QI agents on their route out of Soleij — witnesses encountered in the city who had to be silenced.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Sera Dunt &amp; Bram Ossil:</strong> Killed at the main archive entry desk at the start of the QI operation. Wendric was outside and did not see this.</p>
         <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Wendric Solau:</strong> Dead inside the secret passage at approximately 25 paces. See GM Key Notes — The Night of the Incident for the full account.</p>
       </div>
     </div>
@@ -416,12 +555,12 @@
       <div class="alert-box"><p>All three documents were taken at the watch station. The party retains only what they remember reading.</p></div>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — The Passage (Unsolved · Requires Two People)</div>
-        <p>The passage behind the west wall remains sealed. Requires two people to operate. Wendric's body is inside at approximately 25 paces. The passage exits in Baron Jesavar's estate wine cellar.</p>
+        <p>The passage behind the west wall remains sealed. Requires two people. Wendric's body is inside at approximately 25 paces. Passage exits in Baron Jesavar's estate wine cellar.</p>
         <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Stage 1 — The Lintel:</strong> "The eye of Prios opens at dawn, at zenith, and at the last light before dark." Dawn = east wall. Zenith = ceiling. Last light = west wall.</p>
         <p style="margin-top:0.4rem;"><strong style="color:var(--rust);">Stage 2 — East Wall:</strong> The marble quarry ledger has no dust. Pulling it reveals a scratched sun symbol. Three sun-marked volumes extended simultaneously. First click.</p>
         <p style="margin-top:0.4rem;"><strong style="color:var(--rust);">Stage 3 — West Wall:</strong> Press the lower corner of the correct panel to reveal the bronze disc. Rotate to ZENITH. Second click. Ceiling gold-leaf ray (midday only) points west to confirm.</p>
         <p style="margin-top:0.4rem;"><strong style="color:var(--rust);">Stage 4 — The Spoken Phrase:</strong> <em>"Sarathos edivar Prios, mekana vel thodrim"</em> — from the Solstice Eye prayer in chapel records. Spoken aloud with sequence active, the passage opens.</p>
-        <p style="margin-top:0.5rem;"><em>Inside: 40 paces total. Iron pin holds door open. Midpoint lock at 15 paces. Wendric's body at 25 paces, one hand extended toward the midpoint lock he could not reach.</em></p>
+        <p style="margin-top:0.5rem;"><em>Inside: 40 paces total. Iron pin holds door open. Midpoint lock at 15 paces. Wendric's body at 25 paces, one hand extended toward the midpoint lock.</em></p>
         <p style="margin-top:0.75rem;"><strong style="color:var(--rust);">Also untouched in the archive:</strong> The Jeseebegai Document (hidden in genealogical records). The Seventh Convergence Node (misfiled under agricultural drainage records, Year 11).</p>
       </div>
     </div>
@@ -462,12 +601,73 @@
       </div>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — Brek's investigation &amp; how to use him</div>
-        <p>Brek is investigating Tu'buks's disappearance alongside two dead watchmen. He does not know the connection but is looking for one. He does not know the papers were taken from Diego by an invisible operative while the party sat in his own station — that revelation alone could shift his disposition significantly.</p>
-        <p style="margin-top:0.5rem;">He is a potential asset. If the party can give him a real target — the Unblinded, Bettric, a description of the QI agents — he becomes a force multiplier. If they antagonise him, a significant obstacle. Goro Pell is the dangerous variable — grief-driven and most likely to act unilaterally. Theis is the de-escalating counterweight.</p>
+        <p>Brek is now investigating Tu'buks's disappearance, two dead watchmen, and an ambush with one captive in his custody — Sill. He has a direct thread connecting the ambush to the party. His disposition is shifting from suspicious to potentially cooperative. If the party can give him a real target, he becomes a force multiplier. Goro Pell is the dangerous variable — grief-driven and most likely to act unilaterally. Theis is the de-escalating counterweight.</p>
       </div>
     </div>
   </div>
 
+  <!-- Ambush Figures -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">The Ambush — Thessan &amp; Sill</div><div class="card-subtitle">Freelance crew · No identifying marks</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="person-block">
+        <div class="person-name">Thessan</div>
+        <div class="person-role">Sharpshooter · At large</div>
+        <div class="person-desc">The crew's ranged specialist. Opened from a rooftop, targeting Sael specifically and aiming for his throat scar — this was not a random attack. Escaped without being seen clearly. Has a rendezvous point north of the city where two waterfalls meet a brook. The window on that is unknown.</div>
+      </div>
+      <div class="person-block">
+        <div class="person-name">Sill</div>
+        <div class="person-role">Ambush crew · Captured · In watch custody</div>
+        <div class="person-desc">The one captive taken alive. Interrogated by the party, then handed to the city watch. Gave up Thessan's rendezvous point under pressure. Now in Captain Brek's custody — which connects the ambush directly to Brek's investigation.</div>
+      </div>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — Who sent them</div>
+        <p>The crew was activated by Captain Varelia Sorn after she recognised Sael in the tavern common room. They were freelance — no direct QI affiliation, no identifying marks by design. Sorn used cutouts. Sill does not know who ultimately hired the crew and cannot give Brek a name that traces back to QI. Thessan may know more — if the party reaches the rendezvous point before the window closes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aldric Wenn -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <div><div class="card-title">Aldric Wenn</div><div class="card-subtitle">Tavern Keeper · Tavern on the Hill</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="person-desc">A heavyset widower in his fifties, with the patient manner of a man who has heard most things and been surprised by fewer of them over the years. He knew Tu'buks personally — a quiet, reliable guest who occasionally shared an evening drink with him. He was wary when approached but responded to genuine warmth. He kept Tu'buks's remaining belongings in a box rather than disposing of them. That instinct, or loyalty, may prove significant.</div>
+    </div>
+  </div>
+
+  <!-- Helvane Doss -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <span class="card-tag tag-player">Player</span>
+        <span class="card-tag tag-gm">GM Only</span>
+        <div><div class="card-title">Helvane Doss</div><div class="card-subtitle">Retired Cartographer · Scholar's Quarter · Not Yet Approached</div></div>
+      </div>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="person-desc">A retired cartographer in her seventies, nearly blind, formerly one of the most respected mapmakers in Yndarien. Tu'buks corresponded with her before arriving in Soleij and visited her personally. He left her house visibly shaken. She has not been approached by the party.</div>
+      <div class="gm-spoiler">
+        <div class="gm-spoiler-label">⚿ GM — What she knows</div>
+        <p>Helvane told Tu'buks about a buried structure approximately a mile and a half southwest of Soleij beneath a low ridge locals call the Grey Back. She encountered it during her years of cartographic survey work — mapped the ridge, found anomalies she could not explain, and eventually stopped asking about it. She is old and nearly blind and has long since made peace with not knowing. What the structure actually is remains a GM decision — but Tu'buks found it significant enough to write "confirmed" three times beside her name.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Unseen Operative -->
   <div class="card">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
@@ -479,30 +679,25 @@
     </div>
     <div class="card-body">
       <div class="role-line">A skilled invisible operative — deliberate, targeted, entirely unhurried.</div>
-      <p>Dark-skinned, bald, with a close black beard. His eyes are hazel, but tint toward gold in the right light — the kind of detail you notice and don't forget. He was dressed like a gentleman of moderate means, nothing that would draw attention in the right company, and he was entirely unhurried.</p>
-      <p>Diego saw him for only a moment, paralysed, unable to move or speak. The man knew exactly what he was looking for.</p>
+      <p>Dark-skinned, bald, with a close black beard. His eyes are hazel, but tint toward gold in the right light — the kind of detail you notice and don't forget. He was dressed like a gentleman of moderate means, nothing that would draw attention in the right company, and he was entirely unhurried. Diego saw him for only a moment, paralysed, unable to move or speak. The man knew exactly what he was looking for.</p>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — Master Vedris Orun · Full Profile</div>
-        <p><strong style="color:var(--rust);">Identity:</strong> Master Vedris Orun, Ordo Magica field researcher. Nominally on scholarly exchange in Soleij for four months. Actually embedded to secure material exposing Kulinan Furia's research network. He has now succeeded — and the stakes have changed entirely.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Character:</strong> Methodical. Patient. Without sentimentality. Does not enjoy violence but does not hesitate when the calculation demands it. Shadow: dark amber shot through with veins of cold blue — like firelight dying in ice. Permanent corruption: 3.</p>
+        <p><strong style="color:var(--rust);">Identity:</strong> Master Vedris Orun, Ordo Magica field researcher. Nominally on scholarly exchange in Soleij for four months. Actually embedded to secure material exposing Kulinan Furia's research network. He has now secured the three documents — but the book is still out there and he does not know it.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Character:</strong> Methodical. Patient. Without sentimentality. Shadow: dark amber shot through with veins of cold blue. Permanent corruption: 3.</p>
         <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Stats:</strong> Accurate 9 · Cunning 16 · Discreet 13 · Persuasive 12 · Quick 10 · Resolute 15 · Strong 5 · Vigilant 11</p>
         <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Abilities:</strong></p>
         <ul class="ability-list">
-          <li>Unnoticeable (master) — renders himself imperceptible; people look through him</li>
-          <li>Bend Will (master) — forces a target to act against their will</li>
-          <li>Confusion (master) — scatters a group's perception and coordination</li>
-          <li>Wizardry (master) · Exceptionally Cunning (adept) · Exceptionally Resolute (adept)</li>
-          <li>Telepathic Interrogation (ritualist, adept) — extracts information from a restrained subject</li>
-          <li>Magic Circle (ritualist, adept) — containment and protection</li>
+          <li>Unnoticeable (master) · Bend Will (master) · Confusion (master) · Wizardry (master)</li>
+          <li>Exceptionally Cunning (adept) · Exceptionally Resolute (adept)</li>
+          <li>Telepathic Interrogation (ritualist, adept) · Magic Circle (ritualist, adept)</li>
         </ul>
-        <p style="margin-top:0.75rem;"><strong style="color:var(--rust);">Current situation:</strong> Has all three documents including Document 3 (Furia named). Now in damage-control mode. Will attempt to fully identify the party, determine what they know, and neutralise them before they can report back. Does not yet know Diego saw him. Does not yet know the party found the stench behind the wall.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Likely next moves:</strong> Use Bettric to learn everything about the party's archive movements. Attempt to identify the party's patron. Consider Telepathic Interrogation on a captured party member. Monitor the Tavern on the Hill.</p>
-        <p style="margin-top:0.5rem;"><em>If he learns Diego saw him, Diego becomes a priority target.</em></p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The earring:</strong> Orun has enchanted an earring worn by Bettric — it allows him to communicate with her and, when needed, take full puppet control of her body. She does not know the earring is the mechanism. She knows only that he can sometimes speak through her and that she is absolutely terrified of him.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The earring:</strong> Enchanted jewellery worn by Bettric. Allows remote communication and full puppet control. She does not know it is the mechanism.</p>
+        <p style="margin-top:0.5rem;"><em>If he learns Diego saw him, Diego becomes a priority target. If he learns the party has the book, everything escalates immediately.</em></p>
       </div>
     </div>
   </div>
 
+  <!-- Baron Jesavar -->
   <div class="card">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
@@ -517,14 +712,14 @@
       <p style="margin-top:0.75rem;">He has already sent his secretary to make contact. The invitation has not yet been acted upon. He will trade information for information.</p>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — Key intelligence</div>
-        <p>Jesavar knew the passage existed but did not use it. He has no idea that QI used it to extract Tu'buks through his own estate wine cellar. When he discovers this, he will be livid — it will deepen his alignment with the Church over the Crown and create a significant political wedge the party can exploit.</p>
-        <p style="margin-top:0.5rem;">He suspects one of his archivists is compromised but has not identified Bettric. He may have noted her wandering his estate grounds the morning after the incident — disoriented, with no explanation. Some of his staff noticed. This is a dormant clue that could lead him to her. If the party helps him identify the leak, he becomes a genuine ally.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">His secretary</strong> — the sharpest person in most rooms she enters. Warm, precise, socially skilled. She is the door to Jesavar.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Dowager Baroness Eudela Soleij</strong> — ultimate authority in the barony, not present. Mother of First Father Jeseebegai and of Levia, Master of the local Ordo Magica Order. Widely believed to have orchestrated assassination attempts on the self-proclaimed King Mergai of New Dekanor. Shadow: rich burgundy with gold undertones. Permanent corruption: 1.</p>
+        <p>Jesavar knew the passage existed but did not use it. He has no idea QI used it to extract Tu'buks through his own estate wine cellar. When he discovers this, he will be livid — deepening his alignment with the Church over the Crown.</p>
+        <p style="margin-top:0.5rem;">He suspects a compromised archivist but has not identified Bettric. He may have noted her wandering his estate grounds the morning after the incident — disoriented, with no explanation. If the party helps him identify the leak, he becomes a genuine ally.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Dowager Baroness Eudela Soleij</strong> — ultimate authority in the barony, not present. Mother of First Father Jeseebegai and of Levia, Master of the local Ordo Magica Order. Shadow: rich burgundy with gold undertones. Permanent corruption: 1.</p>
       </div>
     </div>
   </div>
 
+  <!-- Archive Staff -->
   <div class="card">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
@@ -547,9 +742,9 @@
       </div>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — Hidden roles &amp; risks</div>
-        <p><strong style="color:var(--rust);">Valdra Mes:</strong> Not corrupt. Frightened. Albertun was escorted to the restricted section by someone he believed was her. If and when the real Valdra Mes speaks to Albertun, she will know something happened. Koya's infiltration may already be blown.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Albertun:</strong> May be hiding, may have gone to the Headmistress, or may be trying to leave town. If he talks to Valdra Mes, the infiltration is exposed. If he talks to Orun's people, the party's interest in the restricted section is confirmed.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Bettric</strong> — Female archivist, mid-twenties, mousy, nervous, over-helpful. Orun's embedded informant. Reports to Orun via the enchanted earring. Uses the restricted collection as a dead-drop via marginalia in Unblinded ritual shorthand. She knows Wendric's body is in the passage and cannot access it alone. She is playing dumb, terrified, and hoping the restricted section stays sealed. She is not a willing villain — she is a frightened young woman being puppeted by a man she cannot refuse and doesn't fully understand. Significant roleplay implications if the party corners her.</p>
+        <p><strong style="color:var(--rust);">Valdra Mes:</strong> Not corrupt. Frightened. Albertun was escorted to the restricted section by someone he believed was her. If Valdra Mes speaks to Albertun, Koya's infiltration is exposed.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Albertun:</strong> May be hiding, may have gone to the Headmistress, or may be trying to leave town. If he talks to Orun's people, the party's interest in the restricted section is confirmed.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Bettric</strong> — Female archivist, mid-twenties, mousy, nervous, over-helpful. Orun's embedded informant. Reports via the enchanted earring. Uses the restricted collection as a dead-drop via Unblinded ritual marginalia. Knows Wendric's body is in the passage and cannot access it alone. Playing dumb. Terrified. Tu'buks flagged her as suspicious in his book — an explosive discovery if the party connects it.</p>
       </div>
     </div>
   </div>
@@ -568,16 +763,15 @@
     <div class="card-body">
       <div class="gm-spoiler" style="margin-top:0;">
         <div class="gm-spoiler-label">⚿ GM — Full Chronology</div>
-        <p><strong style="color:var(--rust);">Early evening — QI moves:</strong> Four masked QI agents enter the archive late in the evening, moving with purpose. They kill Sera Dunt and Bram Ossil at the main entry desk quickly and quietly. Wendric is walking the outside grounds and does not see this. He does see the four agents enter and, already suspicious — he has recently found a cipher letter stashed in a restricted collection book by an unknown figure one evening, pocketed it impulsively, and has been trying to decode it — he decides to tail them inside.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The extraction:</strong> The agents navigate directly to the restricted section as if they know the building. Bettric is already hiding near the stairhead — she heard something was wrong. Wendric and Bettric join up silently and follow the agents down. They watch as the four agents work through the four-stage passage unlock sequence — requiring two people — then usher Tu'buks out. He is bound, hooded, at daggerpoint. The passage closes behind them.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The decision:</strong> Wendric and Bettric, in hushed panic, decide to follow. They repeat the unlock sequence and open the passage themselves. They enter.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Orun acts:</strong> Bettric has been quietly updating Orun through the enchanted earring she wears — she does not know the earring is the mechanism. He takes remote puppet control of her body. Under his command, Bettric stabs Wendric and leaves him in the passage. Orun's logic: no witnesses, no loose threads. He does not yet know the agents are QI — only that something significant is happening involving Tu'buks and he wants it contained.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The exit:</strong> Still under Orun's partial control, Bettric follows the passage to its end — Baron Jesavar's estate wine cellar. The QI agents are already gone with Tu'buks. Bettric is found shortly after wandering the estate grounds, disoriented, with no coherent explanation. Some of Jesavar's staff noticed. This is a dormant clue.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Wendric bleeds out</strong> alone in the passage at approximately 25 paces. His body, the original partially-decoded Unblinded cipher letter he pocketed from the restricted collection, and whatever else he carried are still on his person. He never found out who placed the letter or who was meant to retrieve it.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Same night in the city:</strong> The QI agents encounter Watchmen Aldus Pren and Coris Fael somewhere on their route out of Soleij — witnesses who had to be silenced. Both are killed.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Separately — at the Tavern on the Hill:</strong> Sael and Kira (the changeling posing as Kira Anderisi) go to the archive looking for Tu'buks when he fails to appear. He is not there. They rush back to his room at the Tavern on the Hill. He is gone. While they search his room in panic, the changeling finds copies of materials — evidence of a large-scale ritual effort not seen in generations, and something suggesting a senior Ordo Magica voice knows the Dark Lord still lives. She takes the materials. Then she turns on Sael — cuts his throat along the old scar and leaves him for dead. She disappears into the city.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The next day — Bettric's problem:</strong> Back under her own control but operating under Orun's orders, Bettric returns to the restricted section intending to deal with Wendric's body. She cannot open the passage alone — two people required. She panics, then resolves to play dumb. The restricted section is already off-limits. She tells Orun she cannot access the body. He accepts this for now. The smell begins. She says nothing, takes the same ignorant stance as Albertun, and hopes the problem stays sealed.</p>
-        <p style="margin-top:0.75rem; font-style:italic; color:var(--stone);">The cultist who placed the dead-drop letter in the restricted collection has not been able to retrieve it. Whoever they are, they know the letter is missing. That thread is still live.</p>
+        <p><strong style="color:var(--rust);">Early evening — QI moves:</strong> Four masked QI agents enter the archive. They kill Sera Dunt and Bram Ossil at the main entry desk. Wendric is outside walking the grounds — he does not see this but does see the agents enter. Already carrying a cipher letter he found stashed in a restricted collection book by an unknown figure, he tails them inside.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The extraction:</strong> Agents navigate directly to the restricted section. Bettric is hiding near the stairhead. Wendric and Bettric join up silently. They watch the agents work through the four-stage passage unlock — requiring two people — then usher Tu'buks out: bound, hooded, at daggerpoint. The passage closes.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The decision:</strong> Wendric and Bettric repeat the unlock sequence and follow into the passage.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Orun acts:</strong> Bettric has been updating Orun via the enchanted earring. He takes remote puppet control. Under his command, Bettric stabs Wendric and leaves him in the passage. Orun does not yet know the agents are QI.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The exit:</strong> Bettric follows the passage to Baron Jesavar's estate wine cellar. QI agents are gone. Bettric is found wandering the estate grounds, disoriented. Jesavar's staff noticed. Dormant clue.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Wendric bleeds out</strong> alone at approximately 25 paces. His body, the original partially-decoded Unblinded cipher letter, and all his effects remain there.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Same night in the city:</strong> QI agents encounter Watchmen Pren and Fael on their route out — silenced.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">At the Tavern on the Hill:</strong> Sael and the changeling (Kira) go to the archive looking for Tu'buks. He is not there. They rush back to his room. He is gone. The changeling finds copies of materials — evidence of a large-scale ritual effort not seen in generations, and something suggesting a senior Ordo Magica voice knows the Dark Lord still lives. She takes them. Then she turns on Sael — cuts his throat along the old scar and leaves him for dead. She disappears.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The next day:</strong> Bettric returns to dispose of Wendric's body. Cannot open the passage alone. Panics. Resolves to play dumb. Tells Orun she cannot access the body. The smell begins. She says nothing.</p>
       </div>
     </div>
   </div>
@@ -593,13 +787,15 @@
     <div class="card-body">
       <div class="gm-spoiler" style="margin-top:0;">
         <div class="gm-spoiler-label">⚿ GM — Captain Varelia Sorn · "Ledger"</div>
-        <p>Queen's Intelligence field operative. Alias: Ledger. Leads a quiet containment and extraction unit. May already be watching given the party's documented presence at the watch station and their known interest in the archive.</p>
-        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Perfect Recall:</strong> Remembers faces, fighting styles, exact words, and who hesitated or lied. If she sees any party member in Soleij, she will remember them perfectly in any future encounter — regardless of disguise, time elapsed, or context. A recurring antagonist threat that cannot be mitigated by simple caution.</p>
-        <p style="margin-top:0.5rem;">Tu'buks is detained. The QI file exists in the southern estate district records office. The party's visit to the watch station is now on record. Sorn may be moving.</p>
+        <p>Queen's Intelligence field operative. Alias: Ledger. Leads a quiet containment and extraction unit. Recognised Sael at the Tavern on the Hill via Perfect Recall. Activated the ambush crew after leaving. Her crew is now broken — three dead, one in watch custody, Thessan in the wind. Sorn is reassessing and is one step behind the party for the first time.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">Perfect Recall:</strong> Remembers faces, fighting styles, exact words, who hesitated or lied. Any party member she has seen is permanently flagged in her memory regardless of disguise or time elapsed.</p>
+        <p style="margin-top:0.5rem;"><strong style="color:var(--rust);">The wooden dowels:</strong> Sorn's communication method. The party has seen them without knowing their significance. The connection will land when dowels appear again — at the rendezvous point, near a dead drop, or inside the QI records office.</p>
+        <p style="margin-top:0.5rem;">Tu'buks is detained. The QI file exists in the southern estate district records office. The party is closing in without knowing it.</p>
       </div>
     </div>
   </div>
 
+  <!-- Changelings -->
   <div class="card">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
@@ -620,37 +816,38 @@
       <div class="person-block"><div class="person-name">Cyrun</div><div class="person-role">Withdrawn · No longer active</div><div class="person-desc">Was integrated into the network, then withdrew entirely. Offered no reason. Has not been seen since around the time of the Soleij Incident.</div></div>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — The Penitent Mask · Risk Analysis</div>
-        <p>One of these seven is an Unblinded loyalist who chose the cult freely after severance — ideology, not coercion. Operated as Kira Anderisi in Soleij; wounded Sael and stole convergence materials; funnelled them to Vintronius. Currently at large. Identity is a GM decision, not yet locked.</p>
+        <p>One of these seven is an Unblinded loyalist who chose the cult freely after severance. Operated as Kira Anderisi in Soleij; wounded Sael; stole convergence materials; funnelled them to Vintronius. Currently at large. Identity is a GM decision, not yet locked.</p>
         <div style="margin-top:0.75rem; display:flex; flex-direction:column; gap:0.4rem;">
-          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Ilmora</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Low — Most devastating if guilty. Betrayal would be total.</span></div>
-          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Vaelk</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Very low — Almost too clean, which is itself a flag.</span></div>
-          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Eryssa</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Medium — Opaque. Deliberate distance-keeping.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Ilmora</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Low — Most devastating if guilty.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Vaelk</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Very low — Almost too clean.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Eryssa</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Medium — Opaque.</span></div>
           <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Sareth</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Medium — Peripheral placement could have been strategic.</span></div>
           <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Nethren</strong><div class="risk-dots"><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot filled"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">Medium-high — Divided loyalty is a manipulation vector.</span></div>
-          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Thalos</strong><div class="risk-dots"><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">High — Absence coincides exactly with the Soleij Incident.</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--rust); min-width:70px;">Thalos</strong><div class="risk-dots"><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot"></div></div><span style="font-size:0.72rem; color:var(--stone);">High — Absence coincides with the Soleij Incident.</span></div>
           <div style="display:flex; align-items:center; gap:0.75rem;"><strong style="font-family:'Cinzel',serif; font-size:0.7rem; color:var(--blood); min-width:70px;">Cyrun</strong><div class="risk-dots"><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div><div class="risk-dot filled high"></div></div><span style="font-size:0.72rem; color:var(--stone);">Very high — Most probable. Active then withdrawn at exactly the right moment.</span></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Faction Pressures -->
   <div class="card">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <span class="card-tag tag-gm">GM Only</span>
-        <div><div class="card-title">Faction Pressures</div><div class="card-subtitle">Five active interests operating simultaneously in Soleij</div></div>
+        <div><div class="card-title">Faction Pressures</div><div class="card-subtitle">Active interests operating simultaneously in Soleij</div></div>
       </div>
       <span class="accordion-arrow">▼</span>
     </div>
     <div class="card-body">
       <div class="gm-spoiler" style="margin-top:0;">
         <div class="gm-spoiler-label">⚿ GM</div>
-        <div class="person-block"><div class="person-name">Fergus / Jade Crickets</div><div class="person-desc">The party. True objective: the QI file in the southern estate district, no trace of Thistle Hold. Primary objective not yet attempted. Documents lost to Orun.</div></div>
-        <div class="person-block"><div class="person-name" style="color:var(--blood);">Ordo Magica — Orun <span class="status-pill pill-danger">Active</span></div><div class="person-desc">Has all three documents including Document 3 (Furia named). Elevated threat. Moving to neutralise the party. Using Bettric as a puppet asset via the enchanted earring.</div></div>
-        <div class="person-block"><div class="person-name">Queen's Intelligence — Sorn</div><div class="person-desc">Tu'buks is detained. The QI file exists. Party's watch station appearance is on record. Sorn may already be moving.</div></div>
-        <div class="person-block"><div class="person-name">Captain Torvald Brek — City Watch</div><div class="person-desc">Not a faction, but a significant variable. Potential asset on the dead watchmen question. Currently monitoring the party.</div></div>
-        <div class="person-block"><div class="person-name">Baron Jesavar Soleij</div><div class="person-desc">Invitation not acted upon. Does not yet know QI used his estate passage. When he finds out, he becomes a potentially powerful ally — and the Crown loses a friend.</div></div>
-        <div class="person-block" style="border-bottom:none;"><div class="person-name">The Unblinded — Absent but present</div><div class="person-desc">The changeling operative is at large. The original cipher letter on Wendric's body connects them directly. The unknown cultist who placed the dead-drop cannot retrieve it. Two separate threads, both still live.</div></div>
+        <div class="person-block"><div class="person-name">Fergus / Jade Crickets</div><div class="person-desc">The party. True objective: QI file in the southern estate district, no trace of Thistle Hold. Now in possession of Tu'buks's book — which points directly at the objective without them realising it yet.</div></div>
+        <div class="person-block"><div class="person-name" style="color:var(--blood);">Ordo Magica — Orun <span class="status-pill pill-danger">Active</span></div><div class="person-desc">Has the three documents including Document 3 (Furia named). Does not know the party has the book. Moving to neutralise the party. Bettric is his puppet asset.</div></div>
+        <div class="person-block"><div class="person-name">Queen's Intelligence — Sorn</div><div class="person-desc">Tu'buks detained. QI file exists. Ambush crew broken. Sorn reassessing — one step behind the party for the first time. Thessan still in the wind.</div></div>
+        <div class="person-block"><div class="person-name">Captain Torvald Brek — City Watch</div><div class="person-desc">Now has Sill in custody. Disposition shifting from suspicious to potentially cooperative. Investigating ambush, two dead watchmen, Tu'buks disappearance — three threads converging.</div></div>
+        <div class="person-block"><div class="person-name">Baron Jesavar Soleij</div><div class="person-desc">Invitation not acted upon. Does not yet know QI used his estate passage. When he finds out, powerful potential ally — and the Crown loses a friend.</div></div>
+        <div class="person-block" style="border-bottom:none;"><div class="person-name">The Unblinded — Absent but present</div><div class="person-desc">Changeling operative at large. Cipher letter on Wendric's body in the passage. Unknown cultist who placed the restricted collection dead-drop cannot retrieve it. Two threads, both live.</div></div>
       </div>
     </div>
   </div>
