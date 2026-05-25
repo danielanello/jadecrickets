@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Soleij — Campaign Reference</title>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1a1208; --ink-light: #3d2f1a; --parchment: #f5ecd7; --parchment-dark: #e8d9b8;
@@ -125,9 +125,70 @@
 
   footer { text-align: center; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,212,168,0.2); margin-top: 3rem; padding-top: 1rem; border-top: 1px solid rgba(240,212,168,0.1); }
 
+  /* ── MODALS ── */
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,6,2,0.88); z-index: 1000; overflow-y: auto; padding: 2rem 1rem; }
+  .modal-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
+  .modal-doc { background: #f5ead0; max-width: 680px; width: 100%; margin: auto; box-shadow: 0 8px 60px rgba(0,0,0,0.8); position: relative; }
+  .modal-close { position: sticky; top: 0; right: 0; float: right; background: rgba(30,20,5,0.85); color: #f0d4a8; border: none; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; padding: 0.5rem 0.9rem; cursor: pointer; text-transform: uppercase; z-index: 10; }
+  .modal-close:hover { background: rgba(139,58,26,0.9); }
+
+  /* Book modal — parchment with ruled lines */
+  .modal-book-page { background: #f5ead0; padding: 14mm 16mm 14mm 18mm; position: relative; border-bottom: 1px dashed rgba(100,80,40,0.2); }
+  .modal-book-page::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(100,80,40,0.1) 28px); pointer-events: none; }
+  .modal-book-inner { position: relative; z-index: 1; }
+  .modal-book-header { font-family: 'Crimson Pro', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(80,60,30,0.4); margin-bottom: 1.2rem; padding-bottom: 0.35rem; border-bottom: 1px solid rgba(100,80,40,0.2); }
+  .modal-printed { font-family: 'Crimson Pro', serif; font-size: 0.85rem; line-height: 1.9; color: rgba(30,20,5,0.55); font-style: italic; margin-bottom: 0.5rem; }
+  .modal-layer-header { font-family: 'Crimson Pro', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(80,60,30,0.32); margin: 1.2rem 0 0.5rem; }
+  .modal-margin { font-family: 'Caveat', cursive; font-size: 1.05rem; color: #1a1005; line-height: 1.7; margin: 0.45rem 0; padding-left: 0.4rem; }
+  .modal-margin.urgent { color: #3a0a0a; font-weight: 600; font-size: 1.1rem; }
+  .modal-margin.careful { font-size: 0.95rem; color: #1a1a05; }
+  .modal-underline { text-decoration: underline; text-decoration-color: rgba(30,20,5,0.4); }
+  .modal-sketch { border: 1px solid rgba(30,20,5,0.25); padding: 0.5rem 0.75rem; margin: 0.6rem 0; display: inline-block; background: rgba(255,255,255,0.12); }
+  .modal-sketch-label { font-family: 'Caveat', cursive; font-size: 0.8rem; color: rgba(30,20,5,0.45); margin-bottom: 0.2rem; }
+  .modal-sketch-content { font-family: 'Caveat', cursive; font-size: 0.95rem; color: #1a1005; }
+  .modal-final-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 260px; text-align: center; padding: 3rem 2rem; }
+  .modal-final-label { font-family: 'Crimson Pro', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(80,60,30,0.35); margin-bottom: 2rem; }
+  .modal-final-text { font-family: 'Caveat', cursive; font-size: 1.9rem; color: #1a1005; line-height: 1.6; }
+  .modal-final-text em { font-style: normal; text-decoration: underline; text-decoration-color: rgba(30,20,5,0.35); }
+  .modal-hr { border: none; border-top: 1px dashed rgba(100,80,40,0.18); margin: 1rem 0; }
+
+  /* Location note modal — folded note feel */
+  .modal-note { background: #f0e4c4; padding: 14mm 14mm 14mm 16mm; position: relative; }
+  .modal-note::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 0% 0%, rgba(100,70,20,0.18) 0%, transparent 45%), radial-gradient(ellipse at 100% 100%, rgba(80,50,10,0.12) 0%, transparent 40%); pointer-events: none; }
+  .modal-note-inner { position: relative; z-index: 1; }
+  .modal-note-header { font-family: 'Caveat', cursive; font-size: 0.85rem; color: rgba(50,35,10,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; padding-bottom: 0.35rem; border-bottom: 1px solid rgba(80,60,20,0.22); }
+  .modal-note-sub { font-family: 'Caveat', cursive; font-size: 1rem; color: rgba(30,20,5,0.45); font-style: italic; margin-bottom: 1.6rem; }
+  .modal-note-entry { margin-bottom: 1.4rem; padding-left: 0.5rem; border-left: 2px solid rgba(80,60,20,0.18); }
+  .modal-note-num { font-family: 'Caveat', cursive; font-size: 0.85rem; color: rgba(80,60,20,0.38); margin-bottom: 0.1rem; }
+  .modal-note-date { font-family: 'Caveat', cursive; font-size: 0.88rem; color: rgba(60,40,10,0.5); margin-bottom: 0.15rem; }
+  .modal-note-loc { font-family: 'Caveat', cursive; font-size: 1.35rem; color: #1a1005; font-weight: 600; line-height: 1.25; margin-bottom: 0.3rem; }
+  .modal-note-text { font-family: 'Caveat', cursive; font-size: 1rem; color: rgba(30,20,5,0.72); line-height: 1.5; }
+  .modal-note-text.flagged { color: #3a0a0a; font-weight: 600; }
+  .modal-note-footer { font-family: 'Caveat', cursive; font-size: 0.78rem; color: rgba(80,60,30,0.32); text-align: right; margin-top: 1.5rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* Archive document modal — clean institutional */
+  .modal-archive { background: #faf6ee; padding: 14mm 16mm; }
+  .modal-archive-header { border-bottom: 2px solid #1a1208; padding-bottom: 0.75rem; margin-bottom: 1.2rem; }
+  .modal-archive-institution { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: #5a5248; margin-bottom: 0.3rem; }
+  .modal-archive-title { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600; color: #1a1208; margin-bottom: 0.2rem; }
+  .modal-archive-meta { font-family: 'Crimson Pro', serif; font-size: 0.8rem; color: #5a5248; font-style: italic; }
+  .modal-archive-body { font-family: 'Crimson Pro', serif; font-size: 0.95rem; line-height: 1.75; color: #1a1208; }
+  .modal-archive-body p { margin-bottom: 0.75rem; }
+  .modal-archive-annotation { font-family: 'Caveat', cursive; font-size: 1rem; color: #3a0a0a; border-left: 2px solid rgba(139,58,26,0.4); padding: 0.4rem 0.75rem; margin: 0.75rem 0; background: rgba(139,58,26,0.04); }
+  .modal-archive-stamp { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(90,82,72,0.4); border: 1px solid rgba(90,82,72,0.25); display: inline-block; padding: 0.2rem 0.6rem; margin-top: 1rem; }
+  .modal-archive-torn { border-top: 3px solid #1a1208; padding-top: 0.75rem; margin-top: 1rem; }
+  .modal-archive-schema { font-family: 'Crimson Pro', serif; font-size: 0.85rem; color: #5a5248; font-style: italic; border: 1px solid rgba(90,82,72,0.3); padding: 0.75rem 1rem; margin: 0.75rem 0; background: rgba(90,82,72,0.04); text-align: center; }
+
+  /* View button */
+  .view-btn { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 1rem; border: 1px solid var(--gold); color: var(--gold); background: transparent; cursor: pointer; border-radius: 1px; margin-top: 1rem; transition: all 0.2s; }
+  .view-btn:hover { background: var(--gold); color: var(--parchment); }
+  .view-btn.gm-modal-btn { border-color: var(--blood); color: var(--blood); }
+  .view-btn.gm-modal-btn:hover { background: var(--blood); color: var(--parchment); }
+
   @media (max-width: 600px) {
     .site-header h1 { font-size: 1.7rem; }
     .card-body { padding: 1rem; }
+    .modal-book-page, .modal-note, .modal-archive { padding: 1rem; }
   }
 </style>
 </head>
@@ -293,6 +354,8 @@
         <div class="final-page-text">"Speak to Osvel. Chapel. He noticed the gap."</div>
       </div>
 
+      <button class="view-btn" onclick="openModal('modal-book')">📖 View the Pages</button>
+
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — Why this book changes everything</div>
         <p>This book is the most dangerous object the party is currently carrying. It contains Furia's name written in Tu'buks's hand connected explicitly to convergence ritual theory, a direct observation of QI logistics movement through the western gate, a notation about the southern estate address pointing directly at the records office, Bettric flagged as suspicious by name, and a path to Osvel at the chapel.</p>
@@ -343,6 +406,8 @@
         <div class="location-date">Four days before disappearance — the final entry</div>
         <div class="location-desc">Tu'buks went to the western gate not to speak to the guards but to watch outbound traffic. He stayed approximately two hours. His book contains a note written that same day: "Green wheel. Soldiers dressed as merchants. This is how they move. I need to leave Soleij."</div>
       </div>
+
+      <button class="view-btn" onclick="openModal('modal-location')">🗒 View the Note</button>
 
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — What each location actually is</div>
@@ -553,6 +618,15 @@
         <p>References a name and "distributed archive nodes, no single point of failure." A hand-drawn seven-point schema — inverted containment, the centre is an entrance. Note: <em>"Not Symbarian. Too recent. Someone is rebuilding the wheel."</em></p>
       </div>
       <div class="alert-box"><p>All three documents were taken at the watch station. The party retains only what they remember reading.</p></div>
+      <div class="gm-spoiler" style="margin-top:0.75rem;">
+        <div class="gm-spoiler-label">⚿ GM — View Original Documents</div>
+        <p style="font-size:0.88rem; color:var(--stone); font-style:italic; margin-bottom:0.75rem;">Now held by Orun. Shown below for GM reference only.</p>
+        <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+          <button class="view-btn gm-modal-btn" onclick="openModal('modal-doc1')">View Document 1</button>
+          <button class="view-btn gm-modal-btn" onclick="openModal('modal-doc2')">View Document 2</button>
+          <button class="view-btn gm-modal-btn" onclick="openModal('modal-doc3')">View Document 3</button>
+        </div>
+      </div>
       <div class="gm-spoiler">
         <div class="gm-spoiler-label">⚿ GM — The Passage (Unsolved · Requires Two People)</div>
         <p>The passage behind the west wall remains sealed. Requires two people. Wendric's body is inside at approximately 25 paces. Passage exits in Baron Jesavar's estate wine cellar.</p>
@@ -855,6 +929,197 @@
   <footer>Throne of Thorns Campaign · Soleij Arc · GM Reference · All party members are male</footer>
 
 </div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- MODAL — TU'BUKS'S BOOK                -->
+<!-- ══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-book">
+  <div class="modal-doc">
+    <button class="modal-close" onclick="closeModal('modal-book')">✕ Close</button>
+
+    <!-- Page 1 -->
+    <div class="modal-book-page">
+      <div class="modal-book-inner">
+        <div class="modal-book-header">Survey Methodology of Ambrian Land Holdings — Vol. II · Chapter 4</div>
+        <p class="modal-printed">The eastern parcels of the Yndarien district present particular challenges to the surveyor, owing to the irregular boundary conditions established during the resettlement period. Boundary markers placed in the third decade of the Queen's reign have in several cases been found to conflict with earlier Alberetorian records, necessitating a dual-register approach to formal documentation...</p>
+        <hr class="modal-hr">
+        <p class="modal-printed">...convergence of the northern and eastern survey lines at the ridge known locally as the Grey Back presents an anomaly unresolved in the current literature. The ridge appears in three separate survey records under differing designations, suggesting either multiple independent surveys conducted without reference to prior work, or a deliberate effort to obscure the true character of the terrain...</p>
+        <div class="modal-layer-header">— earlier notes —</div>
+        <div class="modal-margin">cross-ref: goblin/ogre transition — see Kethavar vol. 3, pp. 44–47</div>
+        <div class="modal-margin">astronomical table discrepancy — Andonia-Tomol conjunction confirmed in THREE independent sources</div>
+        <div class="modal-margin careful">burial practice: Symbarian noble interment always oriented NW. Why NW? Conjunction angle?</div>
+        <hr class="modal-hr">
+        <p class="modal-printed">...the conjunction cycle of the Andonia and Tomol bodies, while well-documented in ecclesiastical records of the early settlement period, has received insufficient attention from secular scholars. The cycle operates on an irregular cadence and does not align neatly with the solar calendar used in contemporary Ambrian administration...</p>
+        <div class="modal-layer-header">— later notes, different ink —</div>
+        <div class="modal-margin urgent"><span class="modal-underline">Dispersal confirmed</span> in at least three independent sources. Not one site — many.</div>
+        <div class="modal-margin urgent">The conjunction window is not approximate. Someone <span class="modal-underline">calculated</span> this.</div>
+        <div class="modal-margin">Furia's name appears again. Third time. Cannot be coincidence.</div>
+      </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="modal-book-page">
+      <div class="modal-book-inner">
+        <div class="modal-book-header">Survey Methodology of Ambrian Land Holdings — Vol. II · Chapter 4 (cont.)</div>
+        <p class="modal-printed">...it is the considered view of this author that no single site within the Yndarien survey zone can account for all anomalous readings documented in the preceding chapters. The distribution of markers, boundary irregularities, and terrain anomalies suggests a pattern of distributed activity over a prolonged period rather than any concentrated administrative effort...</p>
+        <div class="modal-margin urgent">The rite does not require a single location. <span class="modal-underline">This changes everything.</span></div>
+        <div class="modal-margin careful">If I am right — the archive here has been partially cleaned. Someone got here first.</div>
+        <hr class="modal-hr">
+        <p class="modal-printed">...the restricted holdings of institutional archives present a particular methodological challenge. Access to pre-resettlement survey records is inconsistent across the district, and in several institutions the author encountered gaps in the documentary record that could not be explained by ordinary wear, loss, or administrative reorganisation...</p>
+        <div class="modal-layer-header">— Soleij notes, most recent — controlled hand —</div>
+        <div class="modal-margin careful">Wendric — trustworthy. Knows the restricted section better than anyone. Approaches questions carefully.</div>
+        <div class="modal-margin urgent careful">Bettric — <span class="modal-underline">watches the restricted section door more than her work warrants.</span></div>
+        <div class="modal-sketch">
+          <div class="modal-sketch-label">west wall — restricted section</div>
+          <div class="modal-sketch-content">[ shelving — shelving — <span class="modal-underline">panel?</span> — shelving ]<br>bronze disc — upper right &nbsp; <em style="font-size:0.85rem; opacity:0.5;">?</em></div>
+        </div>
+        <div class="modal-margin careful">Administrative office — southern estate row. No name, no register entry. Clerk turned me away. <span class="modal-underline">Someone is here who should not be.</span></div>
+        <div class="modal-margin careful"><span class="modal-underline">Helvane Doss</span> — confirmed. <span class="modal-underline">confirmed.</span> <span class="modal-underline">confirmed.</span></div>
+        <div class="modal-margin urgent" style="border-left:2px solid rgba(60,10,10,0.35); padding-left:0.8rem; margin-top:1rem;">
+          The gate. <span class="modal-underline">Green wheel.</span> Soldiers dressed as merchants.<br>
+          This is how they move.<br>
+          I need to leave Soleij.
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Page -->
+    <div class="modal-book-page">
+      <div class="modal-book-inner">
+        <div class="modal-book-header">Survey Methodology of Ambrian Land Holdings — Vol. II · Final Page</div>
+        <div class="modal-final-page">
+          <div class="modal-final-label">Written separately from the marginalia — careful, unhurried script</div>
+          <div class="modal-final-text">"Speak to <em>Osvel</em>.<br>Chapel.<br>He noticed the gap."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- MODAL — LOCATION LIST                 -->
+<!-- ══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-location">
+  <div class="modal-doc" style="max-width:480px;">
+    <button class="modal-close" onclick="closeModal('modal-location')">✕ Close</button>
+    <div class="modal-note">
+      <div class="modal-note-inner">
+        <div class="modal-note-header">Soleij — site record</div>
+        <div class="modal-note-sub">locations visited, dates noted</div>
+        <div class="modal-note-entry">
+          <div class="modal-note-num">I.</div>
+          <div class="modal-note-date">~3 weeks prior</div>
+          <div class="modal-note-loc">Chapel of the Radiant Memory</div>
+          <div class="modal-note-text">ecclesiastical rec. — astro. cross-ref against Prios liturgical calendar. Gap found. <span class="modal-underline">Why does the record stop?</span></div>
+        </div>
+        <div class="modal-note-entry">
+          <div class="modal-note-num">II.</div>
+          <div class="modal-note-date">~2½ weeks prior</div>
+          <div class="modal-note-loc">Southern Estate Row<br><span style="font-size:1rem; font-weight:400;">[address noted separately]</span></div>
+          <div class="modal-note-text">No name on door. No register. Clerk: "no historical records held here." — <span class="modal-underline">Someone is here who should not be.</span></div>
+        </div>
+        <div class="modal-note-entry">
+          <div class="modal-note-num">III.</div>
+          <div class="modal-note-date">~10 days prior</div>
+          <div class="modal-note-loc">Scholar's Quarter<br><span style="font-size:1rem; font-weight:400;">Helvane Doss — cartographer (ret.)</span></div>
+          <div class="modal-note-text">Corresponded prior to arrival. Visited in person. <span class="modal-underline">confirmed.</span> <span class="modal-underline">confirmed.</span> <span class="modal-underline">confirmed.</span></div>
+        </div>
+        <div class="modal-note-entry">
+          <div class="modal-note-num">IV.</div>
+          <div class="modal-note-date">4 days prior — last entry</div>
+          <div class="modal-note-loc">Western Gate — guard post</div>
+          <div class="modal-note-text flagged"><span class="modal-underline">Green wheel.</span> Soldiers dressed as merchants. This is how they move.<br><br>I need to leave Soleij.</div>
+        </div>
+        <div class="modal-note-footer">personal shorthand — T.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- MODAL — DOCUMENT 1                    -->
+<!-- ══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-doc1">
+  <div class="modal-doc" style="max-width:600px;">
+    <button class="modal-close" onclick="closeModal('modal-doc1')">✕ Close</button>
+    <div class="modal-archive">
+      <div class="modal-archive-header">
+        <div class="modal-archive-institution">High Archive of Soleij · Yndarien District · Restricted Collection</div>
+        <div class="modal-archive-title">Andonia-Tomol Conjunction Survey — Observational Record</div>
+        <div class="modal-archive-meta">Original survey period: Years 3–41 of the Queen's reign · Annotated copy — origin unknown</div>
+      </div>
+      <div class="modal-archive-body">
+        <p>The following table records observed conjunction windows for the Andonia-Tomol celestial pairing across a period of thirty-eight years. Observations were conducted from the eastern tower of the High Archive and cross-referenced against records held at the Chapel of Radiant Memory.</p>
+        <p>Standard conjunction windows occur at irregular intervals averaging fourteen to twenty-two months. The current cycle, based on observational data through Year 41, projects the following thresholds:</p>
+        <p style="padding-left:1.5rem; border-left:2px solid rgba(90,82,72,0.3);"><strong>Threshold A:</strong> Approximately 18 months from current date<br><strong>Threshold B:</strong> Approximately 24 months from current date</p>
+        <p>The variance between thresholds represents the window of celestial alignment sufficient for convergent ritual activity, per historical precedent in Symbarian astronomical records. Outside this window, alignment conditions do not obtain.</p>
+      </div>
+      <div class="modal-archive-annotation">"Not a prophecy. A timetable. Someone built this on purpose."</div>
+      <div class="modal-archive-annotation" style="font-size:0.88rem;">"18 months — minimum. 24 months — maximum. The window is real."</div>
+      <div class="modal-archive-stamp">Restricted — Authorised Access Only</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- MODAL — DOCUMENT 2                    -->
+<!-- ══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-doc2">
+  <div class="modal-doc" style="max-width:600px;">
+    <button class="modal-close" onclick="closeModal('modal-doc2')">✕ Close</button>
+    <div class="modal-archive" style="background:#f8f3e8;">
+      <div class="modal-archive-header">
+        <div class="modal-archive-institution">Personal Research Notes — Tu'buks · Working Document</div>
+        <div class="modal-archive-title">Troll Biology — Transition Mechanisms · Goblin / Ogre / Troll</div>
+        <div class="modal-archive-meta">Compiled over approx. 3 years · Multiple ink layers · Soleij annotations in final section</div>
+      </div>
+      <div class="modal-archive-body">
+        <p>The goblin-to-troll developmental pathway remains disputed in the literature. The conventional model holds that the transition is linear: goblin → ogre → troll, with each stage representing a discrete biological threshold triggered by environmental corruption exposure over time.</p>
+        <p>The evidence, however, does not support a strictly linear model. Several observations complicate the picture significantly:</p>
+        <p style="padding-left:1.5rem; border-left:2px solid rgba(90,82,72,0.3);">1. Ogre specimens collected from Davokar's eastern reaches show troll-characteristic tissue in non-standard locations, suggesting incomplete transition rather than an intermediate stage.<br><br>2. Troll specimens near the Womb Mirror ruin show accelerated transition markers inconsistent with standard corruption exposure timelines.<br><br>3. No confirmed case of reversal has been documented — transition appears to be strictly unidirectional.</p>
+        <p>The most significant finding, noted during cross-referencing with convergence ritual theory, is the following:</p>
+      </div>
+      <div class="modal-archive-annotation" style="font-size:1.05rem;">"if dispersal is the mechanism, a rite need not happen in one place — it can happen in many simultaneously."</div>
+      <div class="modal-archive-annotation" style="font-size:0.9rem;">"The biological trigger and the ritual trigger may be the same mechanism. This is not a coincidence. This was designed."</div>
+      <div class="modal-archive-annotation urgent" style="font-size:0.95rem; border-left-color:rgba(60,10,10,0.4); background:rgba(60,10,10,0.04);">I should not write this down. [written down anyway]</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- MODAL — DOCUMENT 3                    -->
+<!-- ══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-doc3">
+  <div class="modal-doc" style="max-width:600px;">
+    <button class="modal-close" onclick="closeModal('modal-doc3')">✕ Close</button>
+    <div class="modal-archive">
+      <div class="modal-archive-header" style="border-bottom-style:dashed;">
+        <div class="modal-archive-institution">Fragment — torn from larger document · Provenance unknown</div>
+        <div class="modal-archive-title">Distributed Convergence Architecture — Partial Record</div>
+        <div class="modal-archive-meta">Physical condition: torn along top and right edges · Text incomplete · Recovered from restricted collection</div>
+      </div>
+      <div class="modal-archive-torn">
+        <div class="modal-archive-body">
+          <p>...the Furia correspondence establishes a network of distributed archive nodes operating without a single point of failure. Each node holds a partial record. No single node contains sufficient information to reconstruct the whole. This architecture is deliberate.</p>
+          <p>The convergence schema below represents the author's reconstruction of the distributed node relationship based on partial evidence. It should be treated as provisional.</p>
+        </div>
+        <div class="modal-archive-schema">
+          ⬡ — ⬡ — ⬡<br>
+          &nbsp;&nbsp;&nbsp;\ &nbsp;|&nbsp; /<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;[ ● ]<br>
+          &nbsp;&nbsp;&nbsp;/ &nbsp;|&nbsp; \<br>
+          ⬡ — ⬡ — ⬡<br>
+          <span style="font-size:0.75rem; display:block; margin-top:0.5rem;">Seven nodes · Inverted containment · The centre is an entrance, not an anchor</span>
+        </div>
+        <div class="modal-archive-annotation">"Not Symbarian. Too recent. Someone is rebuilding the wheel."</div>
+        <div class="modal-archive-annotation" style="font-size:0.88rem;">"The centre node is not a location. It is a convergence point. It activates when the others do."</div>
+        <p style="font-family:'Crimson Pro', serif; font-size:0.78rem; color:rgba(90,82,72,0.5); font-style:italic; margin-top:0.75rem;">— document torn here — text below this line is missing —</p>
+      </div>
+      <div class="modal-archive-stamp">Now held by Vedris Orun · Not in party possession</div>
+    </div>
+  </div>
+</div>
+
 <script>
   const GM_PASS = "thornsofsoleij";
   let gmUnlocked = false;
@@ -864,6 +1129,9 @@
       el.style.setProperty('display', visible ? 'block' : 'none', 'important');
     });
     document.querySelectorAll('.tag-gm').forEach(el => {
+      el.style.setProperty('display', visible ? 'inline-block' : 'none', 'important');
+    });
+    document.querySelectorAll('.gm-modal-btn').forEach(el => {
       el.style.setProperty('display', visible ? 'inline-block' : 'none', 'important');
     });
     document.querySelectorAll('.card').forEach(card => {
@@ -907,6 +1175,34 @@
     if (card.dataset.gmLocked === 'true') return;
     card.classList.toggle('open');
   }
+
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(m => closeModal(m.id));
+    }
+  });
 </script>
 </body>
 </html>
